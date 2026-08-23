@@ -2573,6 +2573,18 @@ correct service times, address and phone number for local searches.
     transform: scale(.95);
   }
 
+  /* YouTube quick action — brand red, filled icon, stands out from the
+     outline-style location/phone icons beside it. */
+  .nav-yt-link {
+    color: #FF0000;
+  }
+  .nav-yt-link:hover,
+  .nav-yt-link:focus-visible {
+    color: #FF0000;
+    background: rgba(255,0,0,.10);
+    border-color: rgba(255,0,0,.25);
+  }
+
   @media (max-width: 720px) {
     .mobile-header-actions {
       display: flex;
@@ -3286,6 +3298,17 @@ SECTION DOCUMENTATION: Navigation/header: fixed brand, primary links, CTA, and r
     </div>
 
     <div class="mobile-header-actions" aria-label="Quick actions">
+      <a
+        href="#youtube"
+        class="mobile-header-icon nav-yt-link"
+        aria-label="Watch our videos"
+        title="Watch our videos"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.51 3.55 12 3.55 12 3.55s-7.51 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.51 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81ZM9.55 15.57V8.43L15.82 12l-6.27 3.57Z"/>
+        </svg>
+      </a>
+
       <a
         href="https://www.google.com/maps/dir/?api=1&destination=18.1150546,83.4153148&travelmode=driving"
         class="mobile-header-icon"
