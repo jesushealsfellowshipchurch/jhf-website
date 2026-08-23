@@ -2717,7 +2717,10 @@ correct service times, address and phone number for local searches.
 
   @media (prefers-reduced-motion: reduce) {
     .hero .cross,
-    .mobile-header-icon {
+    .mobile-header-icon,
+    .mobile-header-icon[aria-label*="videos"],
+    .mobile-header-icon[aria-label*="directions"],
+    .mobile-header-icon[aria-label*="Call"] {
       animation: none !important;
     }
   }
@@ -2845,6 +2848,17 @@ correct service times, address and phone number for local searches.
     }
   }
 
+  @keyframes desktopYtGlow {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+      box-shadow: 0 0 0 0 rgba(255,0,0,0);
+    }
+    50% {
+      transform: translateY(-2px) scale(1.08);
+      box-shadow: 0 0 0 5px rgba(255,0,0,.12);
+    }
+  }
+
   .nav-location-link,
   .nav-phone-link {
     display: inline-flex !important;
@@ -2901,11 +2915,18 @@ correct service times, address and phone number for local searches.
       animation: none !important;
     }
 
-    .mobile-header-icon:first-child {
+    /* Per-icon animations keyed to aria-labels, not DOM position, so adding
+       new icons never steals another icon's animation. */
+    .mobile-header-icon[aria-label*="videos"] {
+      color: #FF0000;
+      animation: desktopYtGlow 3.4s ease-in-out infinite !important;
+    }
+
+    .mobile-header-icon[aria-label*="directions"] {
       animation: desktopLocationPulse 3.4s ease-in-out infinite !important;
     }
 
-    .mobile-header-icon:last-child {
+    .mobile-header-icon[aria-label*="Call"] {
       animation: desktopPhoneFloat 2.8s ease-in-out infinite !important;
     }
 
