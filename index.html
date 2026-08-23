@@ -1941,21 +1941,32 @@ correct service times, address and phone number for local searches.
 
   .video-card:hover .video-thumb img { transform: scale(1.04); }
 
-  /* Play button overlay shown until clicked */
+  /* Play button overlay — glossy translucent glass, small enough that the
+     thumbnail stays visible underneath. */
   .video-card .youtube-play {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 58px;
-    height: 58px;
+    width: 44px;
+    height: 44px;
     display: grid;
     place-items: center;
     padding-left: 3px;
     border-radius: 50%;
-    background: var(--ink);
-    color: var(--gold-bright);
-    box-shadow: 0 12px 26px rgba(24,21,16,.28);
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,.32),
+      rgba(255,255,255,.08) 45%,
+      rgba(24,21,16,.18)
+    );
+    color: #fff;
+    -webkit-backdrop-filter: blur(6px) saturate(1.3);
+    backdrop-filter: blur(6px) saturate(1.3);
+    border: 1px solid rgba(255,255,255,.45);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.5),
+      0 6px 18px rgba(24,21,16,.25);
     pointer-events: none;
     transition: transform var(--duration-fast) var(--ease-spring),
                 background var(--duration-fast) var(--ease-out);
@@ -1963,8 +1974,12 @@ correct service times, address and phone number for local searches.
 
   .video-card:hover .youtube-play {
     transform: translate(-50%, -50%) scale(1.08);
-    background: var(--gold-dim);
-    color: var(--cream);
+    background: linear-gradient(
+      135deg,
+      rgba(255,255,255,.45),
+      rgba(255,255,255,.15) 45%,
+      rgba(203,182,130,.35)
+    );
   }
 
   /* (Cards now open YouTube in a new tab — no inline iframe.) */
@@ -1998,6 +2013,21 @@ correct service times, address and phone number for local searches.
     .video-title { font-size: .8rem; -webkit-line-clamp: 3; }
     .watch-on-yt { font-size: .64rem; }
     .shorts-badge { font-size: .56rem; padding: 3px 7px; }
+
+    /* Smaller, subtler play button on phones so the thumbnail reads clearly */
+    .video-card .youtube-play {
+      width: 38px;
+      height: 38px;
+      -webkit-backdrop-filter: blur(4px) saturate(1.2);
+      backdrop-filter: blur(4px) saturate(1.2);
+      box-shadow:
+        inset 0 1px 1px rgba(255,255,255,.45),
+        0 4px 12px rgba(24,21,16,.22);
+    }
+    .video-card .youtube-play svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 
   .youtube-note {
