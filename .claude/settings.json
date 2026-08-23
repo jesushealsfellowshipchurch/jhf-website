@@ -1,0 +1,7 @@
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "http://localhost:20128/v1",
+    "ANTHROPIC_AUTH_TOKEN": "sk-3b87528286ed2d8b-63f266-bdb8169d",
+    "ANTHROPIC_MODEL":"openrouter/stealth/ox-alpha"
+  }
+}
