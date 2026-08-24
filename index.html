@@ -526,17 +526,6 @@ correct service times, address and phone number for local searches.
   .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(200,169,112,.2); }
   .btn-ghost:active { background: rgba(200,169,112,.08); }
 
-  .hero-foot {
-    position: absolute; bottom: 30px; left: 0; right: 0;
-    display: flex; justify-content: center; gap: 12px;
-    animation: fadeIn var(--duration-slow) var(--ease-out) .8s backwards;
-  }
-  .hero-foot span {
-    font-size: .8rem; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--gold); animation: bob 2.6s var(--ease-out) infinite;
-  }
-  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
 
@@ -1047,10 +1036,6 @@ correct service times, address and phone number for local searches.
       padding: 14px 20px;
     }
 
-    .hero-foot {
-      bottom: 18px;
-    }
-
     section {
       padding: 60px 0;
     }
@@ -1409,10 +1394,6 @@ correct service times, address and phone number for local searches.
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .hero-foot {
-      display: none;
     }
 
     .sec-head p {
@@ -3127,49 +3108,6 @@ correct service times, address and phone number for local searches.
     pointer-events: none;
   }
 
-  /* --- Hero aurora: slow drifting ambient light --- */
-  .hero-aurora {
-    position: absolute;
-    inset: -15%;
-    z-index: 0;
-    filter: blur(50px);
-    opacity: .9;
-    pointer-events: none;
-  }
-  .hero-aurora span {
-    position: absolute;
-    border-radius: 50%;
-    will-change: transform;
-  }
-  .hero-aurora span:nth-child(1) {
-    width: 48vw; height: 48vw;
-    left: 2%; top: 4%;
-    background: radial-gradient(circle, rgba(203,182,130,.75), transparent 62%);
-    animation: auroraDrift 24s ease-in-out infinite alternate;
-  }
-  .hero-aurora span:nth-child(2) {
-    width: 42vw; height: 42vw;
-    right: -2%; top: 28%;
-    background: radial-gradient(circle, rgba(160,120,60,.55), transparent 60%);
-    animation: auroraDrift 30s ease-in-out infinite alternate-reverse;
-  }
-  .hero-aurora span:nth-child(3) {
-    width: 36vw; height: 36vw;
-    left: 30%; bottom: -8%;
-    background: radial-gradient(circle, rgba(233,214,170,.85), transparent 58%);
-    animation: auroraDrift 34s ease-in-out infinite alternate;
-  }
-  @keyframes auroraDrift {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(6vw, -4vh) scale(1.12); }
-  }
-  /* Keep hero content above the aurora */
-  header.hero > .wrap, header.hero > .hero-foot { position: relative; z-index: 1; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-aurora { display: none; }
-  }
-
   /* --- Glass navigation --- */
   /* (Handled by the base `nav.glass` rule near the top of the stylesheet.) */
 
@@ -3251,6 +3189,472 @@ correct service times, address and phone number for local searches.
   /* --- Magnetic buttons: gentle pull toward cursor --- */
   @media (hover: hover) and (pointer: fine) {
     .btn.magnetic { will-change: transform; }
+  }
+
+
+  /*
+  ============================================================
+  NIGHT-SKY HERO
+  Dark espresso stage replacing the cream hero: canvas god-rays
+  + drifting dust motes behind a stroke-drawn cross, staggered
+  headline reveal and a frosted service-times bar along the
+  bottom edge. Palette-matched to the site's bronze/champagne
+  system. Animation is driven by the #heroSky script at the
+  bottom of the document.
+  ============================================================
+  */
+
+  @keyframes nxRise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Dark stage (later in the sheet than the cream hero backgrounds,
+     so these win at equal specificity). */
+  header.hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    flex-direction: column;
+    justify-content: center;
+    background:
+      radial-gradient(ellipse 120% 90% at 50% -20%, #2A2118 0%, transparent 60%),
+      #181510;
+  }
+
+  /* Vignette painted above the canvas, below the content. */
+  header.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(ellipse 90% 70% at 50% 40%, transparent 55%, rgba(10,9,6,.72) 100%);
+    pointer-events: none;
+  }
+
+  #heroSky {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .nx-cross-wrap, .nx-kicker, .nx-title, .nx-lede, .nx-verse,
+  .nx-actions, .nx-services {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* --- Cross --- */
+  .nx-cross-wrap {
+    margin-bottom: 2rem;
+  }
+  .nx-cross-wrap svg {
+    width: 80px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 0 18px rgba(203,182,130,.35));
+  }
+  .nx-cross-line {
+    fill: none;
+    stroke: var(--gold-bright);
+    stroke-width: 7;
+    stroke-linecap: round;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: nxDraw 2.4s cubic-bezier(.65,0,.25,1) .4s forwards;
+  }
+  @keyframes nxDraw { to { stroke-dashoffset: 0; } }
+  .nx-halo {
+    transform-origin: center;
+    animation: nxBreathe 6s ease-in-out 2.6s infinite;
+  }
+  @keyframes nxBreathe {
+    0%, 100% { opacity: .55; }
+    50%      { opacity: 1; }
+  }
+
+  /* --- Kicker / headline / copy --- */
+  .nx-kicker {
+    animation: nxRise 1.2s ease-out .8s both;
+  }
+  /*
+  GLOSSY GOLD CRYSTAL HEADLINE
+  Each word carries its own champagne-gold gradient clipped to the
+  letterforms, with a slow light-sweep traveling across the metal and
+  a soft golden bloom beneath — the rich "brushed crystal" treatment.
+  Fallback: solid cream if background-clip:text is unsupported.
+  */
+  .nx-title {
+    color: var(--cream);
+    filter:
+      drop-shadow(0 1px 0 rgba(255,246,222,.25))
+      drop-shadow(0 6px 26px rgba(203,182,130,.28));
+  }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .nx-title {
+      color: transparent;
+      filter: none;
+    }
+    .nx-title .w {
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      background-image: linear-gradient(
+        105deg,
+        #8A6D3B   0%,
+        #CBB682  20%,
+        #FFF6DE  38%,
+        #F4D894  48%,
+        #FFFFFF  50%,
+        #F4D894  54%,
+        #CBB682  72%,
+        #8A6D3B 100%
+      );
+      background-size: 220% 100%;
+      background-position: 90% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation:
+        nxRise 1s cubic-bezier(.2,.7,.3,1) var(--d, 0s) forwards,
+        nxSheen 7s ease-in-out calc(var(--d, 0s) + 1.2s) infinite;
+    }
+  }
+  @keyframes nxSheen {
+    0%   { background-position: 90% 0; }
+    55%  { background-position: 10% 0; }
+    100% { background-position: 10% 0; }
+  }
+  .nx-title .w {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(.6em);
+    animation: nxRise 1s cubic-bezier(.2,.7,.3,1) var(--d, 0s) forwards;
+  }
+  .nx-title .nx-line2 {
+    display: block;
+    font-style: italic;
+    color: var(--gold-bright);
+    font-size: .68em;
+  }
+  .nx-lede {
+    font-weight: 300;
+    font-size: clamp(.95rem, 1.8vw, 1.12rem);
+    line-height: 1.75;
+    color: rgba(247,243,230,.66);
+    text-align: center;
+    max-width: 46ch;
+    margin-top: 1.4rem;
+    opacity: 0;
+    animation: nxRise 1.2s ease-out 1.9s forwards;
+  }
+  .nx-verse {
+    margin-top: 1.3rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.02rem, 1.9vw, 1.22rem);
+    color: var(--gold-soft);
+    letter-spacing: .01em;
+    opacity: 0;
+    animation: nxRise 1.2s ease-out 2.05s forwards;
+  }
+  .nx-verse cite {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: rgba(247,243,230,.5);
+  }
+
+  /* --- Crystal glints twinkling on the cross --- */
+  .nx-sparkle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    background:
+      radial-gradient(circle,
+        #FFFFFF 0%,
+        #F4D894 35%,
+        transparent 70%);
+    clip-path: polygon(50% 0%, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0% 50%, 38% 38%);
+    opacity: 0;
+    transform: scale(.4) rotate(0deg);
+    animation: nxTwinkle 4.2s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px rgba(255,246,222,.8));
+  }
+  .nx-sparkle.s1 { top: 18%; left: 18%; animation-delay: 1s; }
+  .nx-sparkle.s2 { top: 42%; right: 12%; width: 7px; height: 7px; animation-delay: 2.6s; }
+  .nx-sparkle.s3 { bottom: 20%; left: 30%; width: 6px; height: 6px; animation-delay: 3.8s; }
+  @keyframes nxTwinkle {
+    0%, 100% { opacity: 0; transform: scale(.4) rotate(0deg); }
+    50%      { opacity: 1; transform: scale(1) rotate(90deg); }
+  }
+
+  /* --- Ornamental filigree divider --- */
+  .nx-filigree {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 1.6rem;
+    opacity: 0;
+    animation: nxRise 1.2s ease-out 2.15s forwards;
+    color: var(--gold-bright);
+  }
+  .nx-filigree .line {
+    flex: 0 1 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(203,182,130,.65), transparent);
+  }
+  .nx-filigree svg {
+    width: 18px;
+    height: 18px;
+    filter: drop-shadow(0 0 5px rgba(203,182,130,.55));
+    animation: nxBreathe 6s ease-in-out infinite;
+  }
+
+  /* --- Actions --- */
+  .nx-actions {
+    margin-top: 2rem;
+    animation: nxRise 1.2s ease-out 2.25s forwards;
+  }
+  /* Glossy jeweled buttons — polished gem surface with a moving sheen */
+  .btn-nx-solid {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,246,222,.45);
+    background:
+      linear-gradient(160deg,
+        #E9C87F 0%,
+        #CBB682 34%,
+        #FFF6DE 50%,
+        #D8BC80 66%,
+        #A98F58 100%);
+    color: #241c0c;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.55),
+      inset 0 -2px 4px rgba(122,94,52,.35),
+      0 10px 30px rgba(0,0,0,.35),
+      0 0 22px rgba(203,182,130,.28);
+  }
+  .btn-nx-solid::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(105deg,
+      transparent,
+      rgba(255,255,255,.55) 50%,
+      transparent);
+    transform: skewX(-18deg);
+    transition: left .7s var(--ease-out);
+  }
+  .btn-nx-solid:hover::after { left: 130%; }
+  .btn-nx-solid:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.6),
+      inset 0 -2px 4px rgba(122,94,52,.35),
+      0 14px 36px rgba(0,0,0,.4),
+      0 0 32px rgba(203,182,130,.45);
+  }
+  .btn-nx-ghost {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(203,182,130,.5);
+    color: var(--cream);
+    background:
+      linear-gradient(160deg,
+        rgba(203,182,130,.16),
+        rgba(203,182,130,.05));
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,246,222,.18),
+      0 8px 24px rgba(0,0,0,.28);
+  }
+  .btn-nx-ghost::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(105deg,
+      transparent,
+      rgba(255,246,222,.28) 50%,
+      transparent);
+    transform: skewX(-18deg);
+    transition: left .7s var(--ease-out);
+  }
+  .btn-nx-ghost:hover::after { left: 130%; }
+  .btn-nx-ghost:hover {
+    border-color: var(--gold-bright);
+    color: #FFF6DE;
+    transform: translateY(-3px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,246,222,.25),
+      0 12px 32px rgba(0,0,0,.34),
+      0 0 26px rgba(203,182,130,.3);
+  }
+
+  /* --- Service-times bar --- */
+  .nx-services {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    padding: 1.05rem 1.5rem;
+    border-top: 1px solid rgba(203,182,130,.18);
+    background: rgba(24,21,16,.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    animation: nxRise 1.2s ease-out 2.5s forwards;
+  }
+  .nx-service {
+    display: flex;
+    align-items: baseline;
+    gap: .6rem;
+    font-size: .82rem;
+    letter-spacing: .06em;
+    color: rgba(247,243,230,.62);
+  }
+  .nx-service strong {
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    color: var(--cream);
+  }
+  .nx-service .dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold-bright);
+    align-self: center;
+  }
+  @media (max-width: 560px) {
+    .nx-services { flex-direction: column; align-items: center; gap: .45rem; }
+    .nx-service .dot { display: none; }
+  }
+  @media (max-width: 720px) {
+    .nx-cross-wrap svg { width: 58px; }
+  }
+
+  /* --- Nav legibility over the dark hero ---
+     While the nav is transparent (top of page, before `.glass` is
+     added by scroll), its text must be light to read against the
+     dark hero. Once scrolled, the frosted cream bar returns and the
+     regular dark text takes over. */
+  nav:not(.glass) .brand { color: var(--cream); }
+  nav:not(.glass) .brand:hover { color: var(--gold-bright); }
+  nav:not(.glass) .brand em { color: var(--gold-bright); }
+  nav:not(.glass) .nav-links a:not(.nav-cta) { color: rgba(247,243,230,.78); }
+  nav:not(.glass) .nav-links a:not(.nav-cta):hover { color: #ffffff; }
+  /* Exception: when the mobile menu panel is open over the dark hero,
+     its frosted-cream surface needs dark text again. */
+  nav:not(.glass) .nav-links.open a:not(.nav-cta) { color: var(--muted); }
+  nav:not(.glass) .nav-links.open a:not(.nav-cta):hover { color: var(--ink); }
+  nav:not(.glass) .burger span { background: var(--cream); }
+  nav:not(.glass) .burger:hover span { background: var(--gold-bright); }
+  nav:not(.glass) .mobile-header-icon { color: var(--cream); }
+  nav:not(.glass) .mobile-header-icon:hover { color: #ffffff; }
+  nav:not(.glass) .nav-yt-link,
+  nav:not(.glass) .mobile-header-icon.nav-yt-link { color: #FF0000; }
+  /* The CTA pill is a dark espresso gradient — over the dark hero it needs
+     a champagne treatment to stay visible until the cream glass bar
+     appears on scroll. */
+  nav:not(.glass) .nav-cta {
+    background: linear-gradient(160deg, rgba(203,182,130,.18), rgba(203,182,130,.06));
+    border-color: rgba(203,182,130,.55);
+    box-shadow:
+      inset 0 1px 0 rgba(255,246,222,.2),
+      0 8px 24px rgba(0,0,0,.3);
+  }
+  nav:not(.glass) .nav-cta:hover {
+    background: linear-gradient(160deg, rgba(203,182,130,.32), rgba(203,182,130,.12));
+    border-color: var(--gold-bright);
+    box-shadow:
+      inset 0 1px 0 rgba(255,246,222,.28),
+      0 10px 28px rgba(0,0,0,.34),
+      0 0 24px rgba(203,182,130,.3);
+  }
+
+  /*
+  CRYSTAL HEADINGS SITEWIDE
+  Extends the hero's glossy gold-crystal treatment to the major section
+  headings so the premium language carries through the whole page.
+  Same @supports guard: unsupported browsers keep the existing colors.
+  */
+  .sec-head h2, .visit-message h2 {
+    /* Bronze → champagne range chosen to stay legible on BOTH the cream
+       sections and the dark Services/Visit surfaces — no near-background
+       stops like cream-on-cream. */
+    background-image: linear-gradient(
+      105deg,
+      #8a744d   0%,
+      #CBB682  38%,
+      #E8D5A4  50%,
+      #CBB682  62%,
+      #8a744d 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .sec-head h2, .visit-message h2 {
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+  /* The verse-band quote keeps its dark ink on the light band; only tint
+     its highlighted span with the same champagne gradient. */
+  .verse-band blockquote span {
+    color: var(--gold);
+  }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .verse-band blockquote span {
+      background-image: linear-gradient(
+        105deg,
+        #A98F58 0%,
+        #CBB682 40%,
+        #8A6D3B 55%,
+        #CBB682 70%,
+        #A98F58 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  /* --- Reduced motion: everything visible immediately, no canvas --- */
+  @media (prefers-reduced-motion: reduce) {
+    .nx-kicker, .nx-title .w, .nx-lede, .nx-verse,
+    .nx-actions, .nx-services {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+    .nx-cross-line {
+      stroke-dashoffset: 0 !important;
+      animation: none !important;
+    }
+    .nx-halo { animation: none !important; }
+    .nx-sparkle { animation: none !important; opacity: .9; }
+    .nx-filigree { opacity: 1 !important; animation: none !important; }
+    .btn-nx-solid::after,
+    .btn-nx-ghost::after { display: none; }
+    .nx-title .w { animation: nxRise 1s ease-out var(--d, 0s) forwards !important; }
   }
 
 </style>
@@ -3373,22 +3777,68 @@ SECTION DOCUMENTATION: Navigation/header: fixed brand, primary links, CTA, and r
 </nav>
 <!--
 SECTION DOCUMENTATION: Hero: first-impression church identity, headline, location/category and primary visitor actions.
+Night-sky treatment: canvas god-rays + drifting motes behind a stroke-drawn
+cross, staggered headline reveal and a frosted service-times bar along the
+bottom edge. Styles live in the "NIGHT-SKY HERO" layer at the end of the
+stylesheet; the canvas animation is initialized by the script near the
+bottom of the document.
 -->
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
-  <div class="hero-aurora" aria-hidden="true"><span></span><span></span><span></span></div>
-  <div class="wrap">
-    <div class="cross" aria-hidden="true"></div>
-    <p class="kicker">Baptist Church · Vizianagaram, Andhra Pradesh</p>
-    <h1>Jesus Heals Fellowship Church<br /><em>gathering hearts,</em> changing lives</h1>
-    <p class="lede">A warm, welcoming community of faith in Ambati Satram Area. Join us for worship — Fridays 6:00 PM & Sundays 9:00 AM.</p>
-    <p class="hero-verse">&ldquo;I am the Lord, who heals you.&rdquo; <cite>&mdash; Exodus 15:26</cite></p>
-    <div class="hero-actions">
-      <a href="#location" class="btn btn-dark">Plan Your Visit</a>
-      <a href="#welcome" class="btn btn-ghost">About Our Church</a>
-    </div>
+  <canvas id="heroSky" aria-hidden="true"></canvas>
+
+  <div class="nx-cross-wrap" aria-hidden="true">
+    <svg viewBox="0 0 60 100">
+      <!-- halo -->
+      <circle class="nx-halo" cx="30" cy="50" r="26" fill="none"
+              stroke="#CBB682" stroke-width="1.4"/>
+      <!-- cross, drawn in by stroke-dashoffset -->
+      <path class="nx-cross-line" d="M30 14 V86 M13 38 H47"/>
+    </svg>
+    <!-- crystal glints -->
+    <i class="nx-sparkle s1"></i>
+    <i class="nx-sparkle s2"></i>
+    <i class="nx-sparkle s3"></i>
   </div>
-  <div class="hero-foot"><span>↓</span></div>
+
+  <p class="kicker nx-kicker">Baptist Church · Vizianagaram, Andhra Pradesh</p>
+
+  <h1 class="nx-title">
+    <span class="w" style="--d:1.05s">Jesus</span>
+    <span class="w" style="--d:1.15s">Heals</span>
+    <span class="w" style="--d:1.25s">Fellowship</span>
+    <span class="w" style="--d:1.35s">Church</span>
+    <em class="nx-line2">
+      <span class="w" style="--d:1.55s">gathering</span>
+      <span class="w" style="--d:1.63s">hearts,</span>
+      <span class="w" style="--d:1.71s">changing</span>
+      <span class="w" style="--d:1.79s">lives</span>
+    </em>
+  </h1>
+
+  <p class="nx-lede">A warm, welcoming community of faith in Ambati Satram Area. Join us for worship — Fridays 6:00 PM &amp; Sundays 9:00 AM.</p>
+
+  <p class="nx-verse">&ldquo;I am the Lord, who heals you.&rdquo; <cite>&mdash; Exodus 15:26</cite></p>
+
+  <!-- ornamental filigree divider -->
+  <div class="nx-filigree" aria-hidden="true">
+    <span class="line"></span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+      <path d="M12 3 L14.5 9.5 L21 12 L14.5 14.5 L12 21 L9.5 14.5 L3 12 L9.5 9.5 Z"/>
+      <circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+    </svg>
+    <span class="line"></span>
+  </div>
+
+  <div class="hero-actions nx-actions">
+    <a href="#location" class="btn btn-nx-solid">Plan Your Visit</a>
+    <a href="#welcome" class="btn btn-nx-ghost">About Our Church</a>
+  </div>
+
+  <footer class="nx-services">
+    <div class="nx-service"><strong>Friday Worship</strong><span class="dot"></span><span>6:00 – 10:30 pm</span></div>
+    <div class="nx-service"><strong>Sunday Worship</strong><span class="dot"></span><span>9:00 am – 12:30 pm</span></div>
+  </footer>
 </header>
 
 <!--
@@ -4326,24 +4776,198 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
   })();
 
   /*
-  BEHAVIOR: HERO PARALLAX
-  The aurora layer drifts at a different rate than the page while scrolling
-  through the hero, adding depth. Transform-only, rAF-throttled.
+  BEHAVIOR: NIGHT-SKY HERO CANVAS
+  Paints two translucent layers behind the hero content:
+    1. God rays — soft champagne beams fanning down from above,
+       swaying very slowly.
+    2. Dust motes — small particles drifting upward, brightening
+       while inside the central beam band and flickering gently.
+  Skipped entirely for visitors with reduced motion enabled; a
+  single static frame is painted instead so the scene still reads.
   */
   (() => {
-    const aurora = document.querySelector('.hero-aurora');
-    if (!aurora) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const canvas = document.getElementById('heroSky');
+    if (!canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext('2d');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    let parallaxFrame = 0;
-    window.addEventListener('scroll', () => {
-      if (parallaxFrame) return;
-      parallaxFrame = requestAnimationFrame(() => {
-        parallaxFrame = 0;
-        const y = Math.min(window.scrollY, window.innerHeight);
-        aurora.style.transform = 'translateY(' + (y * 0.25).toFixed(1) + 'px)';
+    // Beams are generated from the canvas width so the light fills the
+    // full left-to-right space at any viewport size: more, wider-spaced
+    // rays on desktop, fewer narrower ones on mobile.
+    // Each beam: x position (fraction of width), tilt spread, base width, alpha.
+    let RAYS = [];
+    const makeRays = () => {
+      const cssW = W / devicePixelRatio;
+      const count = Math.min(14, Math.max(6, Math.round(cssW / 160)));
+      // deterministic pseudo-random per index so the pattern is stable
+      const rand = (i, salt) => {
+        const v = Math.sin((i + 1) * 12.9898 + salt * 78.233) * 43758.5453;
+        return v - Math.floor(v);
+      };
+      return Array.from({ length: count }, (_, i) => ({
+        x: (i + 0.5) / count,
+        tilt: (rand(i, 1) - 0.5) * 0.26,
+        w: 70 + rand(i, 2) * 110,
+        a: 0.035 + rand(i, 3) * 0.035
+      }));
+    };
+
+    let W, H;
+    const resize = () => {
+      W = canvas.width = canvas.offsetWidth * devicePixelRatio;
+      H = canvas.height = canvas.offsetHeight * devicePixelRatio;
+      RAYS = makeRays();
+    };
+    resize();
+    addEventListener('resize', resize);
+
+    const drawRays = (t) => {
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      for (const r of RAYS) {
+        const sway = Math.sin(t * 0.00022 + r.x * 9) * 0.03;
+        const bx = r.x * W;
+        const spread = r.tilt + sway;
+        const g = ctx.createLinearGradient(bx, 0, bx, H);
+        g.addColorStop(0, `rgba(203,182,130,${r.a})`);
+        g.addColorStop(1, 'rgba(203,182,130,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.moveTo(bx - r.w / 2, -20);
+        ctx.lineTo(bx + r.w / 2, -20);
+        ctx.lineTo(bx + r.w / 2 + spread * H + r.w * 0.9, H + 20);
+        ctx.lineTo(bx - r.w / 2 + spread * H - r.w * 0.9, H + 20);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.restore();
+    };
+
+    // Motes drift upward through the light, brighter inside the beam band.
+    const motes = Array.from({ length: 42 }, (_, i) => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: 0.6 + Math.random() * 1.6,
+      speed: 0.00004 + Math.random() * 0.00009,
+      phase: i,
+      alpha: 0.12 + Math.random() * 0.3
+    }));
+
+    /*
+    CURSOR PARTICLE TRAIL
+    Fine-pointer devices only. Gold sparks are emitted at the pointer as it
+    moves across the hero, decelerate, fade and shrink out. Particles live
+    in canvas space (CSS pixels scaled by devicePixelRatio at draw time).
+    */
+    let sparks = [];
+    let lastEmit = { x: null, y: null };
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const hero = canvas.closest('.hero');
+      hero.addEventListener('pointermove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        // Emit along the segment since the previous event so fast swipes
+        // leave an unbroken trail instead of dotted gaps.
+        if (lastEmit.x !== null) {
+          const dx = x - lastEmit.x;
+          const dy = y - lastEmit.y;
+          const dist = Math.hypot(dx, dy);
+          const steps = Math.min(Math.floor(dist / 14), 6);
+          for (let s = 1; s <= steps; s++) {
+            sparks.push({
+              x: (lastEmit.x + dx * s / steps) * devicePixelRatio,
+              y: (lastEmit.y + dy * s / steps) * devicePixelRatio,
+              vx: (Math.random() - 0.5) * 0.5 * devicePixelRatio,
+              vy: (-0.25 - Math.random() * 0.45) * devicePixelRatio,
+              life: 1,
+              decay: 0.012 + Math.random() * 0.012,
+              r: (1.2 + Math.random() * 1.8)
+            });
+          }
+        } else {
+          sparks.push({
+            x: x * devicePixelRatio,
+            y: y * devicePixelRatio,
+            vx: (Math.random() - 0.5) * 0.5 * devicePixelRatio,
+            vy: -0.4 * devicePixelRatio,
+            life: 1,
+            decay: 0.02,
+            r: 1.5
+          });
+        }
+        lastEmit = { x, y };
       });
-    }, { passive: true });
+      hero.addEventListener('pointerleave', () => { lastEmit = { x: null, y: null }; });
+    }
+
+    const updateSparks = (dt) => {
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const p = sparks[i];
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.life -= p.decay * dt;
+        if (p.life <= 0) { sparks.splice(i, 1); continue; }
+        ctx.fillStyle = `rgba(244,216,148,${(p.life * 0.85).toFixed(3)})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * p.life * devicePixelRatio, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    };
+
+    const drawMotes = (t) => {
+      ctx.save();
+      for (const m of motes) {
+        m.y -= m.speed;
+        if (m.y < -0.02) m.y = 1.02;
+        const px = (m.x + Math.sin(t * 0.0004 + m.phase) * 0.012) * W;
+        const py = m.y * H;
+        const inBeam = 1 - Math.min(Math.abs(m.x - 0.52) / 0.28, 1);
+        const flicker = 0.75 + Math.sin(t * 0.002 + m.phase * 3) * 0.25;
+        ctx.fillStyle = `rgba(244,216,148,${m.alpha * (0.35 + inBeam) * flicker})`;
+        ctx.beginPath();
+        ctx.arc(px, py, m.r * devicePixelRatio, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    };
+
+    let lastFrame = 0;
+    const frame = (t) => {
+      // dt in ~60fps-frame units, clamped so tab-switches don't explode it
+      const dt = Math.min((t - lastFrame) / 16.7, 3) || 1;
+      lastFrame = t;
+      ctx.clearRect(0, 0, W, H);
+      drawRays(t);
+      drawMotes(t);
+      updateSparks(dt);
+      rafId = requestAnimationFrame(frame);
+    };
+
+    // Pause the loop while the hero is scrolled out of view so rays/motes
+    // don't burn CPU/GPU in the background; resume on return.
+    let rafId = 0;
+    if ('IntersectionObserver' in window && !reduced) {
+      let running = false;
+      const visibility = new IntersectionObserver((entries) => {
+        const visible = entries[0].isIntersecting;
+        if (visible && !running) {
+          running = true;
+          rafId = requestAnimationFrame(frame);
+        } else if (!visible && running) {
+          running = false;
+          cancelAnimationFrame(rafId);
+        }
+      }, { threshold: 0 });
+      visibility.observe(canvas.closest('.hero') || canvas);
+    } else if (!reduced) {
+      requestAnimationFrame(frame);
+    } else {
+      drawRays(1200); drawMotes(1200);
+    }
   })();
 
 </script>
