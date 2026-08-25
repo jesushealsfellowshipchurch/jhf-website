@@ -3329,6 +3329,11 @@ correct service times, address and phone number for local searches.
     opacity: 0;
     transform: translateY(.6em);
     animation: nxRise 1s cubic-bezier(.2,.7,.3,1) var(--d, 0s) forwards;
+    /* background-clip:text leaves glyph overhang (J hook, italic g) unfilled
+       outside this span's own box — pad the box, pull back with negative
+       margin so layout is unchanged. */
+    padding: .05em .08em;
+    margin: -.05em -.08em;
   }
   .nx-title .nx-line2 {
   display: block;
@@ -4409,10 +4414,11 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
     const MAX_PER_ROW = 3;
 
     // Shown only if every live-feed attempt fails (3 videos + 3 shorts).
+    // Long-form uploads only — Shorts never appear in the Videos row.
     const FALLBACK_VIDEOS = [
       { id: 'G_WB8T4lD4c', title: 'నా ప్రతి ఓటమిలో ధైర్యం నీవే — New Telugu Christian Song' },
       { id: '40ahsHVl-Zo', title: 'Bible Golden Words — Stacy Stany Christy' },
-      { id: 'ncFnDcQeNz4', title: 'నిజమే కదా ఆయన చెంత పొందుకున్న స్వాంతన' }
+      { id: 'jxJYNomKYLY', title: 'Aathma Deepama — New Telugu Christian Song — Rev Dr R Sukumar Patnaik' }
     ];
     const FALLBACK_SHORTS = [
       { id: 'KfaBP9bj1Lo', title: 'ప్రాణాధారము 😇🙌' },
@@ -4420,15 +4426,20 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
       { id: 'YUcQoT-53ss', title: 'దేవునియందు నిరీక్షణ ఎన్నటికీ వృధా కాదు' }
     ];
 
-    // Known older uploads used to backfill the Videos row when the recent
-    // feed contains fewer than 3 non-short items. Newest first.
+    // Known older long-form uploads used to backfill the Videos row when the
+    // recent feed contains fewer than 3 non-short items (the channel currently
+    // posts mostly Shorts). Newest first.
     const OLDER_VIDEO_IDS = [
-      { id: 'ncFnDcQeNz4', title: 'నిజమే కదా ఆయన చెంత పొందుకున్న స్వాంతన' }
+      { id: 'G_WB8T4lD4c', title: 'నా ప్రతి ఓటమిలో ధైర్యం నీవే — New Telugu Christian Song' },
+      { id: '40ahsHVl-Zo', title: 'Bible Golden Words — Stacy Stany Christy' },
+      { id: 'jxJYNomKYLY', title: 'Aathma Deepama — New Telugu Christian Song — Rev Dr R Sukumar Patnaik' }
     ];
 
     // Free, key-less feed relays, tried in order.
     // 1. rss2json — converts the RSS to JSON directly (primary).
     // 2. AllOrigins — raw CORS proxy, parsed as XML (backup).
+    // 3. AllOrigins /get — JSON-wrapped variant of the same proxy, used when
+    //    the raw endpoint is down (it is rate-limited independently).
     const FEED_URL = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
     const SOURCES = [
       {
@@ -4438,6 +4449,10 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
       {
         url: 'https://api.allorigins.win/raw?url=' + encodeURIComponent(FEED_URL),
         parse: parseXmlFeed
+      },
+      {
+        url: 'https://api.allorigins.win/get?url=' + encodeURIComponent(FEED_URL),
+        parse: (text) => parseXmlFeed(JSON.parse(text).contents)
       }
     ];
 
@@ -4602,11 +4617,15 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
           const videos = await source.parse(await fetchWithTimeout(source.url, 8000));
           if (!videos.length) continue;
           const regular = videos.filter(v => !v.short).slice(0, MAX_PER_ROW);
-          // Backfill the Videos row with known older uploads so it always
-          // shows 3 tiles even when recent uploads are mostly shorts.
+          // Backfill the Videos row with known older long-form uploads so it
+          // always shows 3 tiles even when recent uploads are mostly Shorts.
+          // Never backfills an item the feed itself marked as a Short.
           for (const older of OLDER_VIDEO_IDS) {
             if (regular.length >= MAX_PER_ROW) break;
-            if (!regular.some(v => v.id === older.id)) regular.push(older);
+            if (!regular.some(v => v.id === older.id) &&
+                !videos.some(v => v.id === older.id && v.short)) {
+              regular.push(older);
+            }
           }
           renderRow(grid, regular);
           if (shortsGrid && shortsLabel) {
