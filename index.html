@@ -3268,11 +3268,11 @@ correct service times, address and phone number for local searches.
     position: absolute;
     z-index: 1;
     /* Positioned to the upper-right of the cross; the dove faces left
-       and appears to glide across the cross path */
-    top: 22%;
-    left: 52%;
-    width: 120px;
-    transform: translate(30px, -10px);
+       and appears to descend toward the cross */
+    top: 18%;
+    left: 50%;
+    width: 200px;
+    transform: translate(40px, -10px);
     pointer-events: none;
     opacity: 0;
     animation: nxDoveFadeIn 2.5s ease-out 3.2s forwards;
@@ -3359,13 +3359,13 @@ correct service times, address and phone number for local searches.
   }
   /* Responsive sizing */
   @media (max-width: 1100px) {
-    .nx-dove-wrap { top: 18%; left: 48%; width: 100px; transform: translate(20px, -8px); }
+    .nx-dove-wrap { top: 15%; left: 48%; width: 160px; transform: translate(30px, -8px); }
   }
   @media (max-width: 720px) {
-    .nx-dove-wrap { top: 15%; left: 50%; width: 80px; transform: translate(10px, -5px); }
+    .nx-dove-wrap { top: 12%; left: 50%; width: 120px; transform: translate(15px, -5px); }
   }
   @media (max-width: 480px) {
-    .nx-dove-wrap { top: 13%; left: 52%; width: 60px; transform: translate(8px, -3px); }
+    .nx-dove-wrap { top: 10%; left: 52%; width: 90px; transform: translate(10px, -3px); }
   }
   .nx-cross-line {
     fill: none;
@@ -3917,43 +3917,149 @@ bottom of the document.
     <div class="nx-dove-glow"></div>
     <!-- Feathered motion trail behind the dove -->
     <canvas class="nx-dove-trail" aria-hidden="true"></canvas>
-    <svg class="nx-dove" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="nx-dove" viewBox="0 0 240 170" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="doveWing" x1="20" y1="12" x2="85" y2="68" gradientUnits="userSpaceOnUse">
+        <linearGradient id="doveBody" x1="70" y1="40" x2="180" y2="130" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stop-color="#F4E4C1"/>
-          <stop offset="40%" stop-color="#E8D4A0"/>
-          <stop offset="75%" stop-color="#CBB682"/>
+          <stop offset="45%" stop-color="#E8D4A0"/>
+          <stop offset="80%" stop-color="#CBB682"/>
           <stop offset="100%" stop-color="#A98F58"/>
         </linearGradient>
-        <linearGradient id="doveBody" x1="40" y1="30" x2="95" y2="48" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#E8D4A0"/>
-          <stop offset="55%" stop-color="#CBB682"/>
-          <stop offset="100%" stop-color="#BFAE7A"/>
+        <linearGradient id="doveWingL" x1="0" y1="0" x2="120" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#F4E4C1"/>
+          <stop offset="50%" stop-color="#E8D4A0"/>
+          <stop offset="100%" stop-color="#CBB682"/>
+        </linearGradient>
+        <linearGradient id="doveWingR" x1="240" y1="0" x2="120" y2="80" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#F4E4C1"/>
+          <stop offset="50%" stop-color="#E8D4A0"/>
+          <stop offset="100%" stop-color="#CBB682"/>
         </linearGradient>
       </defs>
+
+      <!-- ============================================ -->
+      <!--  HOLY SPIRIT DOVE — sacred descending pose   -->
+      <!--  All organic path geometry. No circles/ovals. -->
+      <!-- ============================================ -->
+
+      <!-- TAIL FEATHERS — elegant fan, narrow pointed, streaming below -->
+      <path d="M 108 110 C 102 124, 90 138, 78 148 C 92 140, 104 128, 112 116 Z"
+            fill="#CBB682" opacity=".45"/>
+      <path d="M 114 112 C 108 128, 100 144, 92 154 C 106 144, 116 130, 120 118 Z"
+            fill="#BFAE7A" opacity=".38"/>
+      <path d="M 120 112 C 116 130, 114 148, 112 158 C 122 148, 126 132, 128 118 Z"
+            fill="#A98F58" opacity=".30"/>
+      <path d="M 126 112 C 126 128, 132 144, 140 154 C 134 142, 128 128, 130 116 Z"
+            fill="#BFAE7A" opacity=".38"/>
+      <path d="M 132 110 C 136 122, 148 136, 160 144 C 148 136, 138 124, 136 114 Z"
+            fill="#CBB682" opacity=".32"/>
+
+      <!-- BODY — elongated dove shape, fuller chest, tapers to tail, NOT a circle -->
       <path d="
-        M 45 26
-        C 44 22, 48 18, 53 22
-        C 56 16, 62 14, 66 19
-        C 70 16, 78 15, 86 18
-        C 84 20, 76 24, 66 23
-        L 54 28
-        C 50 32, 48 38, 48 42
-        C 52 40, 56 36, 60 34
-        L 78 30
-        C 80 32, 78 36, 74 38
-        L 58 42
-        C 54 48, 52 54, 50 58
-        C 48 56, 44 48, 44 42
-        C 44 36, 44 30, 45 26
+        M 106 74
+        C 100 80, 96 90, 98 100
+        C 100 108, 106 114, 114 116
+        C 122 118, 132 116, 138 112
+        C 144 108, 148 100, 148 92
+        C 148 84, 144 76, 138 70
+        C 130 64, 118 64, 106 74
         Z"
         fill="url(#doveBody)" opacity=".72"/>
-      <!-- Eye -->
-      <circle cx="50" cy="24" r="1.1" fill="#CBB682" opacity=".8"/>
-      <!-- Upper wing highlight -->
-      <path d="M 56 24 C 62 19, 72 17, 84 18" stroke="#F4E4C1" stroke-width=".6" opacity=".35" stroke-linecap="round"/>
-      <!-- Tail feather line -->
-      <path d="M 48 44 C 46 50, 46 55, 48 57" stroke="#CBB682" stroke-width=".5" opacity=".25" stroke-linecap="round"/>
+
+      <!-- HEAD/NECK — smooth continuous path from crown through nape into body, NO separate circle -->
+      <path d="
+        M 100 68
+        C 96 60, 96 50, 102 44
+        C 108 38, 116 38, 120 44
+        C 124 50, 122 58, 118 64
+        C 114 70, 108 74, 104 74
+        C 100 74, 98 72, 100 68
+        Z"
+        fill="url(#doveBody)" opacity=".78"/>
+
+      <!-- BEAK — short, pointed, dove-like, emerging from head -->
+      <path d="M 100 56 C 96 54, 88 52, 82 52 C 86 56, 92 58, 100 60 Z"
+            fill="#CBB682" opacity=".7"/>
+      <!-- Beak tip accent -->
+      <path d="M 82 52 L 78 51 L 81 54 Z"
+            fill="#BFAE7A" opacity=".5"/>
+
+      <!-- EYE — small, subtle -->
+      <circle cx="104" cy="50" r="1.4" fill="#CBB682" opacity=".85"/>
+
+      <!-- ================================================ -->
+      <!--  LEFT WING — sweeping upward-outward with visible primary feather tips  -->
+      <!-- ================================================ -->
+      <path d="
+        M 104 76
+        C 96 68, 82 56, 64 44
+        C 50 34, 34 26, 18 22
+        C 10 20, 4 22, 2 26
+        C 0 30, 4 34, 12 36
+        C 6 34, 2 32, 0 34
+        C -2 36, 0 40, 6 42
+        C 14 46, 28 52, 44 58
+        C 34 54, 22 50, 14 48
+        C 8 48, 4 52, 8 56
+        C 16 62, 34 68, 56 74
+        C 46 70, 32 66, 22 64
+        C 14 64, 10 68, 16 72
+        C 28 78, 50 82, 78 84
+        C 90 84, 100 82, 104 76
+        Z"
+        fill="url(#doveWingL)" opacity=".68"/>
+
+      <!-- ================================================ -->
+      <!--  RIGHT WING — sweeping upward-outward with visible primary feather tips  -->
+      <!-- ================================================ -->
+      <path d="
+        M 132 76
+        C 140 68, 154 56, 172 44
+        C 186 34, 202 26, 218 22
+        C 226 20, 232 22, 234 26
+        C 236 30, 232 34, 224 36
+        C 230 34, 234 32, 236 34
+        C 238 36, 236 40, 230 42
+        C 222 46, 208 52, 192 58
+        C 202 54, 214 50, 222 48
+        C 228 48, 232 52, 228 56
+        C 220 62, 202 68, 180 74
+        C 190 70, 204 66, 214 64
+        C 222 64, 226 68, 220 72
+        C 208 78, 186 82, 158 84
+        C 146 84, 136 82, 132 76
+        Z"
+        fill="url(#doveWingR)" opacity=".68"/>
+
+      <!-- ====================================== -->
+      <!--  FEATHER DETAILS — organic edge definition  -->
+      <!-- ====================================== -->
+
+      <!-- Left wing — primary feather tip lines -->
+      <path d="M 12 34 C 18 38, 26 42, 36 46"
+            stroke="#F4E4C1" stroke-width=".6" opacity=".28" stroke-linecap="round" fill="none"/>
+      <path d="M 8 48 C 18 54, 30 60, 46 66"
+            stroke="#E8D4A0" stroke-width=".5" opacity=".20" stroke-linecap="round" fill="none"/>
+      <path d="M 18 64 C 32 70, 50 76, 72 82"
+            stroke="#CBB682" stroke-width=".4" opacity=".16" stroke-linecap="round" fill="none"/>
+
+      <!-- Right wing — primary feather tip lines -->
+      <path d="M 224 34 C 218 38, 210 42, 200 46"
+            stroke="#F4E4C1" stroke-width=".6" opacity=".28" stroke-linecap="round" fill="none"/>
+      <path d="M 228 48 C 218 54, 206 60, 190 66"
+            stroke="#E8D4A0" stroke-width=".5" opacity=".20" stroke-linecap="round" fill="none"/>
+      <path d="M 218 64 C 204 70, 186 76, 164 82"
+            stroke="#CBB682" stroke-width=".4" opacity=".16" stroke-linecap="round" fill="none"/>
+
+      <!-- Body back sheen -->
+      <path d="M 108 72 C 118 66, 132 66, 140 72"
+            stroke="#F4E4C1" stroke-width=".5" opacity=".18" stroke-linecap="round" fill="none"/>
+
+      <!-- Wing leading edge highlights -->
+      <path d="M 104 74 C 88 60, 62 42, 24 26"
+            stroke="#F4E4C1" stroke-width=".5" opacity=".20" stroke-linecap="round" fill="none"/>
+      <path d="M 132 74 C 148 60, 174 42, 212 26"
+            stroke="#F4E4C1" stroke-width=".5" opacity=".20" stroke-linecap="round" fill="none"/>
     </svg>
     <!-- Atmospheric particles — sharp near dove, blurred at distance for depth -->
     <div class="nx-dove-particles">
