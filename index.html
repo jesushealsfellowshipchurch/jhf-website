@@ -3255,6 +3255,118 @@ correct service times, address and phone number for local searches.
     display: block;
     filter: drop-shadow(0 0 18px rgba(203,182,130,.35));
   }
+
+  /*
+  DOVE — frozen in time
+  A subtle dove silhouette flies across the cross, caught mid-flight.
+  Positioned at z-index 1 (between the god-rays canvas at z:0 and
+  the content at z:2). The dove itself is stationary — a very slow
+  parallax float gives the impression of a suspended moment rather
+  than active flight. Colours use the existing champagne/gold system.
+  */
+  .nx-dove-wrap {
+    position: absolute;
+    z-index: 1;
+    /* Positioned to the upper-right of the cross; the dove faces left
+       and appears to glide across the cross path */
+    top: 22%;
+    left: 52%;
+    width: 120px;
+    transform: translate(30px, -10px);
+    pointer-events: none;
+    opacity: 0;
+    animation: nxDoveFadeIn 2.5s ease-out 3.2s forwards;
+  }
+  @keyframes nxDoveFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .nx-dove {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    height: auto;
+    filter:
+      drop-shadow(0 0 10px rgba(203,182,130,.3))
+      drop-shadow(0 0 22px rgba(203,182,130,.12));
+    /* Subtle float — tiny relative offsets that work at any wrapper position/size */
+    animation: nxDoveFloat 14s ease-in-out 3.2s infinite;
+  }
+  @keyframes nxDoveFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25%      { transform: translate(-2px, -3px) rotate(-.3deg); }
+    50%      { transform: translate(0, -5px) rotate(0deg); }
+    75%      { transform: translate(2px, -2px) rotate(.3deg); }
+  }
+  /* Soft radial glow behind the dove */
+  .nx-dove-glow {
+    position: absolute;
+    inset: -35%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center,
+      rgba(203,182,130,.13) 0%,
+      rgba(203,182,130,.05) 40%,
+      transparent 70%);
+    filter: blur(8px);
+    pointer-events: none;
+    animation: nxDoveGlow 8s ease-in-out 3.4s infinite;
+  }
+  @keyframes nxDoveGlow {
+    0%, 100% { opacity: .65; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.06); }
+  }
+  /* Feathered motion trail — thin canvas behind the dove */
+  .nx-dove-trail {
+    position: absolute;
+    right: 70%;
+    top: 30%;
+    width: 120px;
+    height: 20px;
+    pointer-events: none;
+    opacity: .35;
+    filter: blur(4px);
+    transform: translateY(-2px);
+    mask-image: linear-gradient(to left, rgba(0,0,0,.55) 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,.55) 0%, transparent 100%);
+  }
+  /* Atmospheric particles — scattered around the dove */
+  .nx-dove-particles {
+    position: absolute;
+    inset: -50%;
+    pointer-events: none;
+  }
+  .nx-particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(203,182,130,.7), rgba(203,182,130,0));
+    opacity: 0;
+    animation: nxParticleDrift 7s ease-in-out infinite;
+  }
+  .nx-particle.sharp {
+    filter: none;
+    animation-duration: 6s;
+  }
+  .nx-particle.blur {
+    filter: blur(2.5px);
+    animation-duration: 9s;
+    opacity: .5;
+  }
+  @keyframes nxParticleDrift {
+    0%, 100% { opacity: 0;   transform: translateY(0) scale(.6); }
+    30%      { opacity: .8;  transform: translateY(-3px) scale(1); }
+    70%      { opacity: .6;  transform: translateY(-6px) scale(.9); }
+  }
+  /* Responsive sizing */
+  @media (max-width: 1100px) {
+    .nx-dove-wrap { top: 18%; left: 48%; width: 100px; transform: translate(20px, -8px); }
+  }
+  @media (max-width: 720px) {
+    .nx-dove-wrap { top: 15%; left: 50%; width: 80px; transform: translate(10px, -5px); }
+  }
+  @media (max-width: 480px) {
+    .nx-dove-wrap { top: 13%; left: 52%; width: 60px; transform: translate(8px, -3px); }
+  }
   .nx-cross-line {
     fill: none;
     stroke: var(--gold-bright);
@@ -3662,6 +3774,11 @@ correct service times, address and phone number for local searches.
     .btn-nx-solid::after,
     .btn-nx-ghost::after { display: none; }
     .nx-title .w { animation: nxRise 1s ease-out var(--d, 0s) forwards !important; }
+    .nx-dove-wrap { opacity: .85 !important; animation: none !important; }
+    .nx-dove { animation: none !important; }
+    .nx-dove-glow { animation: none !important; opacity: .7 !important; }
+    .nx-dove-trail { display: none !important; }
+    .nx-particle { animation: none !important; opacity: .6 !important; }
   }
 
 </style>
@@ -3793,6 +3910,61 @@ bottom of the document.
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
   <canvas id="heroSky" aria-hidden="true"></canvas>
+
+  <!-- Dove — flies across the cross, frozen in time -->
+  <div class="nx-dove-wrap" aria-hidden="true">
+    <!-- Soft radial glow behind the dove -->
+    <div class="nx-dove-glow"></div>
+    <!-- Feathered motion trail behind the dove -->
+    <canvas class="nx-dove-trail" aria-hidden="true"></canvas>
+    <svg class="nx-dove" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="doveWing" x1="20" y1="12" x2="85" y2="68" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#F4E4C1"/>
+          <stop offset="40%" stop-color="#E8D4A0"/>
+          <stop offset="75%" stop-color="#CBB682"/>
+          <stop offset="100%" stop-color="#A98F58"/>
+        </linearGradient>
+        <linearGradient id="doveBody" x1="40" y1="30" x2="95" y2="48" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#E8D4A0"/>
+          <stop offset="55%" stop-color="#CBB682"/>
+          <stop offset="100%" stop-color="#BFAE7A"/>
+        </linearGradient>
+      </defs>
+      <path d="
+        M 45 26
+        C 44 22, 48 18, 53 22
+        C 56 16, 62 14, 66 19
+        C 70 16, 78 15, 86 18
+        C 84 20, 76 24, 66 23
+        L 54 28
+        C 50 32, 48 38, 48 42
+        C 52 40, 56 36, 60 34
+        L 78 30
+        C 80 32, 78 36, 74 38
+        L 58 42
+        C 54 48, 52 54, 50 58
+        C 48 56, 44 48, 44 42
+        C 44 36, 44 30, 45 26
+        Z"
+        fill="url(#doveBody)" opacity=".72"/>
+      <!-- Eye -->
+      <circle cx="50" cy="24" r="1.1" fill="#CBB682" opacity=".8"/>
+      <!-- Upper wing highlight -->
+      <path d="M 56 24 C 62 19, 72 17, 84 18" stroke="#F4E4C1" stroke-width=".6" opacity=".35" stroke-linecap="round"/>
+      <!-- Tail feather line -->
+      <path d="M 48 44 C 46 50, 46 55, 48 57" stroke="#CBB682" stroke-width=".5" opacity=".25" stroke-linecap="round"/>
+    </svg>
+    <!-- Atmospheric particles — sharp near dove, blurred at distance for depth -->
+    <div class="nx-dove-particles">
+      <span class="nx-particle sharp" style="top:14%;left:32%;width:3px;height:3px;animation-delay:.6s"></span>
+      <span class="nx-particle sharp" style="top:26%;left:16%;width:2px;height:2px;animation-delay:2.2s"></span>
+      <span class="nx-particle sharp" style="top:38%;left:42%;width:2px;height:2px;animation-delay:1.4s"></span>
+      <span class="nx-particle blur" style="top:8%;left:20%;width:4px;height:4px;animation-delay:3.1s"></span>
+      <span class="nx-particle blur" style="top:32%;left:56%;width:5px;height:5px;animation-delay:1.8s"></span>
+      <span class="nx-particle blur" style="top:48%;left:28%;width:3px;height:3px;animation-delay:4.0s"></span>
+    </div>
+  </div>
 
   <div class="nx-cross-wrap" aria-hidden="true">
     <svg viewBox="0 0 60 100">
@@ -4417,8 +4589,8 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
     // Long-form uploads only — Shorts never appear in the Videos row.
     const FALLBACK_VIDEOS = [
       { id: 'G_WB8T4lD4c', title: 'నా ప్రతి ఓటమిలో ధైర్యం నీవే — New Telugu Christian Song' },
-      { id: '40ahsHVl-Zo', title: 'Bible Golden Words — Stacy Stany Christy' },
-      { id: 'jxJYNomKYLY', title: 'Aathma Deepama — New Telugu Christian Song — Rev Dr R Sukumar Patnaik' }
+      { id: 'jxJYNomKYLY', title: 'Aathma Deepama — Rev Dr R Sukumar Patnaik' },
+      { id: '40ahsHVl-Zo', title: 'Bible Golden Words — Stacy Stany Christy' }
     ];
     const FALLBACK_SHORTS = [
       { id: 'KfaBP9bj1Lo', title: 'ప్రాణాధారము 😇🙌' },
@@ -4431,8 +4603,8 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
     // posts mostly Shorts). Newest first.
     const OLDER_VIDEO_IDS = [
       { id: 'G_WB8T4lD4c', title: 'నా ప్రతి ఓటమిలో ధైర్యం నీవే — New Telugu Christian Song' },
-      { id: '40ahsHVl-Zo', title: 'Bible Golden Words — Stacy Stany Christy' },
-      { id: 'jxJYNomKYLY', title: 'Aathma Deepama — New Telugu Christian Song — Rev Dr R Sukumar Patnaik' }
+      { id: 'jxJYNomKYLY', title: 'Aathma Deepama — Rev Dr R Sukumar Patnaik' },
+      { id: '40ahsHVl-Zo', title: 'Bible Golden Words — Stacy Stany Christy' }
     ];
 
     // Free, key-less feed relays, tried in order.
@@ -4989,6 +5161,38 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
     } else {
       drawRays(1200); drawMotes(1200);
     }
+  })();
+
+  /*
+  DOVE MOTION TRAIL
+  Paints a faint feathered trail behind the dove on the small canvas
+  element (.nx-dove-trail). Draws once on load — no loop needed since
+  the CSS mask handles the fade and the canvas is static.
+  */
+  (() => {
+    const t = document.querySelector('.nx-dove-trail');
+    if (!t || !t.getContext) return;
+    const ctx = t.getContext('2d');
+    const dpr = devicePixelRatio || 1;
+    const w = t.offsetWidth || 120;
+    const h = t.offsetHeight || 20;
+    t.width = w * dpr;
+    t.height = h * dpr;
+    ctx.scale(dpr, dpr);
+    // Soft champagne trail, widest at right (near dove), fading left
+    const g = ctx.createLinearGradient(w, 0, 0, 0);
+    g.addColorStop(0,   'rgba(203,182,130,.5)');
+    g.addColorStop(0.3, 'rgba(203,182,130,.25)');
+    g.addColorStop(0.7, 'rgba(203,182,130,.08)');
+    g.addColorStop(1,   'rgba(203,182,130,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.moveTo(w, h * 0.3);
+    ctx.bezierCurveTo(w * 0.6, h * 0.1, w * 0.3, h * 0.5, 0, h * 0.45);
+    ctx.lineTo(0, h * 0.55);
+    ctx.bezierCurveTo(w * 0.3, h * 0.5, w * 0.6, h * 0.9, w, h * 0.7);
+    ctx.closePath();
+    ctx.fill();
   })();
 
 </script>
