@@ -3240,7 +3240,7 @@ correct service times, address and phone number for local searches.
   }
 
 .nx-kicker, .nx-title, .nx-lede, .nx-verse,
-.nx-actions, .nx-services {
+.nx-actions {
     position: relative;
     z-index: 2;
   }
@@ -3325,86 +3325,47 @@ correct service times, address and phone number for local searches.
     90%      { opacity: .3;  transform: translateY(-1px) scale(.8); }
   }
 
-  /* Hero family photo — top-right corner, below nav, blended in */
-  .hero-family-photo-wrap {
-    position: absolute;
-    top: calc(var(--nav-h, 64px) + 1.5rem);
-    right: 100rem;
-    z-index: 2;
-    pointer-events: none;
-    animation: nxRise 1.5s ease-out 2s both;
+  /* Pastoral couple — centered portrait with names */
+  .hero-couple {
+    margin: 1rem auto 0;
+    text-align: center;
+    opacity: 0;
+    animation: nxRise 1.2s ease-out 1.6s forwards;
   }
-  .hero-family-photo {
+  .hero-couple-photo {
     display: block;
-    width: clamp(140px, 16vw, 220px);
+    width: clamp(140px, 18vw, 240px);
     height: auto;
-    border-radius: 10px;
-    border: 1px solid rgba(203,182,130,.18);
+    margin: 0 auto;
+    border-radius: 12px;
+    border: 1.5px solid rgba(203,182,130,.22);
     box-shadow:
-      0 4px 24px rgba(0,0,0,.4),
-      0 0 50px rgba(203,182,130,.06);
-    opacity: .75;
-    filter: saturate(.85);
+      0 4px 20px rgba(0,0,0,.35),
+      0 0 40px rgba(203,182,130,.08);
+    opacity: .85;
+    filter: saturate(.9);
     transition: opacity .4s, filter .4s;
   }
-  .hero-family-photo-wrap:hover .hero-family-photo {
+  .hero-couple:hover .hero-couple-photo {
     opacity: 1;
     filter: saturate(1);
   }
-
-  /* iPhone 13 family — precise photo sizing */
-  /* iPhone 13 mini (5.4″) — 375pt / 360px CSS */
-  @media (max-width: 375px) {
-    .hero-family-photo-wrap {
-      top: auto;
-      bottom: 50rem;
-      right: 20rem;
-    }
-    .hero-family-photo { width: clamp(110px, 30vw, 140px); }
+  .hero-couple-names {
+    margin-top: .8rem;
+    font-family: var(--serif);
+    font-size: clamp(.85rem, 1.6vw, 1.05rem);
+    line-height: 1.5;
+    color: rgba(247,243,230,.75);
   }
-  /* iPhone 13 / 13 Pro (6.1″) — 390pt / 390px CSS */
-  @media (min-width: 376px) and (max-width: 430px) {
-    .hero-family-photo-wrap {
-      top: auto;
-      bottom: 50rem;
-      right: 20rem;
-    }
-    .hero-family-photo { width: clamp(130px, 33vw, 170px); }
+  .hero-couple-names strong {
+    display: block;
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: .02em;
   }
-  /* iPhone 13 Pro Max (6.7″) — 430pt / 428px CSS */
-  @media (min-width: 431px) and (max-width: 480px) {
-    .hero-family-photo-wrap {
-      top: auto;
-      bottom: 50rem;
-      right: 20rem;
-    }
-    .hero-family-photo { width: clamp(150px, 35vw, 200px); }
-  }
-  /* 7-inch tablets (≤600px) */
-  @media (min-width: 481px) and (max-width: 600px) {
-    .hero-family-photo-wrap {
-      top: auto;
-      bottom: 50rem;
-      right: 20rem;
-    }
-    .hero-family-photo { width: clamp(160px, 34vw, 220px); }
-  }
-  /* 8-9 inch tablets (≤768px) */
-  @media (min-width: 601px) and (max-width: 768px) {
-    .hero-family-photo-wrap {
-      top: auto;
-      bottom: 50rem;
-      right: 20rem;
-    }
-    .hero-family-photo { width: clamp(180px, 36vw, 250px); }
-  }
-  /* 10-11 inch tablets (≤1024px) */
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .hero-family-photo-wrap {
-      top: calc(var(--nav-h, 64px) + 1.5rem);
-      right: 100rem;
-    }
-    .hero-family-photo { width: clamp(200px, 30vw, 300px); }
+  .hero-couple-names span {
+    font-style: italic;
+    color: var(--gold-soft);
   }
 
   /*
@@ -3420,8 +3381,8 @@ correct service times, address and phone number for local searches.
     z-index: 1;
     /* Positioned to the upper-right of the cross; the dove faces left
        and appears to descend toward the cross */
-    top: 10%;
-    left: 50%;
+    top: 7%;
+    left: 52%;
     width: clamp(100px, 14vw, 210px);
     transform: translate(40px, -10px);
     pointer-events: none;
@@ -3496,18 +3457,12 @@ correct service times, address and phone number for local searches.
     30%      { opacity: .8;  transform: translateY(-3px) scale(1); }
     70%      { opacity: .6;  transform: translateY(-6px) scale(.9); }
   }
-  /* Responsive sizing — Holy Spirit Dove */
-  @media (max-width: 1100px) {
-    .nx-cross-image { width: clamp(90px, 13vw, 150px); }
-    .nx-dove-wrap { top: 15%; left: 48%; width: clamp(90px, 13vw, 170px); transform: translate(20px, -6px); }
+  /* Responsive sizing — Dove + Cross: single fluid scale */
+  .nx-cross-image {
+    width: clamp(60px, 12vw, 180px);
   }
-  @media (max-width: 720px) {
-    .nx-cross-image { width: clamp(75px, 15vw, 120px); }
-    .nx-dove-wrap { top: 12%; left: 50%; width: clamp(80px, 14vw, 130px); transform: translate(10px, -4px); }
-  }
-  @media (max-width: 480px) {
-    .nx-cross-image { width: clamp(60px, 17vw, 100px); }
-    .nx-dove-wrap { top: 10%; left: 52%; width: clamp(70px, 16vw, 110px); transform: translate(5px, -2px); }
+  .nx-dove-wrap {
+    width: clamp(70px, 12vw, 210px);
   }
 
 
@@ -3587,12 +3542,12 @@ correct service times, address and phone number for local searches.
     color: rgba(247,243,230,.66);
     text-align: center;
     max-width: 46ch;
-    margin-top: 1.4rem;
+    margin-top: .7rem;
     opacity: 0;
     animation: nxRise 1.2s ease-out 1.9s forwards;
   }
   .nx-verse {
-    margin-top: 1.3rem;
+    margin-top: .8rem;
     font-family: var(--serif);
     font-style: italic;
     font-size: clamp(1.02rem, 1.9vw, 1.22rem);
@@ -3619,7 +3574,7 @@ correct service times, address and phone number for local searches.
     display: flex;
     align-items: center;
     gap: 14px;
-    margin-top: 1.6rem;
+    margin-top: 1rem;
     opacity: 0;
     animation: nxRise 1.2s ease-out 2.15s forwards;
     color: var(--gold-bright);
@@ -3731,9 +3686,11 @@ correct service times, address and phone number for local searches.
 
   /* --- Service-times bar --- */
   .nx-services {
+    position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 2;
     display: flex;
     justify-content: center;
     gap: clamp(1.5rem, 5vw, 4rem);
@@ -3770,6 +3727,32 @@ correct service times, address and phone number for local searches.
   @media (max-width: 560px) {
     .nx-services { flex-direction: column; align-items: center; gap: .45rem; }
     .nx-service .dot { display: none; }
+  }
+
+  /* Safe area support — notch/home indicator devices */
+  .nx-services {
+    padding-bottom: calc(1.05rem + env(safe-area-inset-bottom, 0px));
+  }
+  nav {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  /* Landscape mobile — compress hero vertically */
+  @media (max-height: 500px) and (orientation: landscape) {
+    header.hero {
+      min-height: 100svh;
+      padding-top: calc(var(--nav-h, 64px) + 1rem);
+      padding-bottom: 1rem;
+    }
+    .nx-cross-wrap { margin-bottom: .8rem; }
+    .nx-cross-image { width: clamp(40px, 10vw, 80px); }
+    .nx-dove-wrap { width: clamp(50px, 10vw, 90px); }
+    .nx-lede { margin-top: .6rem; font-size: clamp(.8rem, 1.5vw, .95rem); }
+    .nx-verse { margin-top: .5rem; font-size: clamp(.85rem, 1.5vw, 1rem); }
+    .nx-filigree { margin-top: .6rem; }
+    .nx-services { gap: 1rem; padding: .6rem 1rem; }
+    .hero-couple-photo { width: clamp(80px, 12vw, 120px); }
   }
 
   /* --- Nav legibility over the dark hero ---
@@ -3879,6 +3862,7 @@ correct service times, address and phone number for local searches.
     .holy-spirit-dove { animation: none !important; }
     .nx-dove-glow { animation: none !important; opacity: .7 !important; }
     .nx-particle { animation: none !important; opacity: .6 !important; }
+    .hero-couple { animation: none !important; opacity: 1 !important; }
   }
 
 </style>
@@ -4011,14 +3995,6 @@ bottom of the document.
 <header class="hero" id="top">
   <canvas id="heroSky" aria-hidden="true"></canvas>
 
-  <!-- Hero family photo — top-right, blended in -->
-  <div class="hero-family-photo-wrap" aria-hidden="true">
-    <img src="assets/hero-family-photo.png"
-         class="hero-family-photo"
-         alt=""
-         loading="eager">
-  </div>
-
   <!-- Holy Spirit Dove — transparent PNG, frozen in time -->
   <div class="nx-dove-wrap" aria-hidden="true">
     <div class="nx-dove-glow"></div>
@@ -4065,6 +4041,19 @@ bottom of the document.
   <p class="nx-title">
     <span class="w" style="--d:2.35s">Vizianagaram, Andhra Pradesh</span>
   </p>
+
+  <!-- Pastoral couple portrait -->
+  <div class="hero-couple">
+    <img src="assets/hero-family-photo.png"
+         class="hero-couple-photo"
+         alt="Rev Dr R Sukumar Patnaik and Ps R Syamala Patnaik"
+         loading="eager">
+    <p class="hero-couple-names">
+      <span>Rev Dr R Sukumar Patnaik</span>
+      <span>&amp; Ps R Syamala Patnaik</span>
+    </p>
+  </div>
+
   <p class="nx-lede">A warm, welcoming community of faith in Ambati Satram Area. Join us for worship — Fridays 7:00 PM &amp; Sundays 10:00 AM.</p>
 
   <p class="nx-verse">&ldquo;I am the Lord, who heals you.&rdquo; <cite>&mdash; Exodus 15:26</cite></p>
