@@ -3352,33 +3352,33 @@ correct service times, address and phone number for local searches.
     filter: saturate(1);
   }
 
-  /* Mobile/tablet family photo — size by screen diagonal */
-  /* 5-inch phones (≤360px) */
-  @media (max-width: 360px) {
+  /* iPhone 13 family — precise photo sizing */
+  /* iPhone 13 mini (5.4″) — 375pt / 360px CSS */
+  @media (max-width: 375px) {
     .hero-family-photo-wrap {
       top: auto;
       bottom: 50rem;
       right: 20rem;
     }
-    .hero-family-photo { width: clamp(100px, 28vw, 130px); }
+    .hero-family-photo { width: clamp(110px, 30vw, 140px); }
   }
-  /* 6-inch phones (≤414px) */
-  @media (min-width: 361px) and (max-width: 414px) {
+  /* iPhone 13 / 13 Pro (6.1″) — 390pt / 390px CSS */
+  @media (min-width: 376px) and (max-width: 430px) {
     .hero-family-photo-wrap {
       top: auto;
       bottom: 50rem;
       right: 20rem;
     }
-    .hero-family-photo { width: clamp(120px, 30vw, 160px); }
+    .hero-family-photo { width: clamp(130px, 33vw, 170px); }
   }
-  /* Large phones (≤480px) */
-  @media (min-width: 415px) and (max-width: 480px) {
+  /* iPhone 13 Pro Max (6.7″) — 430pt / 428px CSS */
+  @media (min-width: 431px) and (max-width: 480px) {
     .hero-family-photo-wrap {
       top: auto;
       bottom: 50rem;
       right: 20rem;
     }
-    .hero-family-photo { width: clamp(140px, 32vw, 190px); }
+    .hero-family-photo { width: clamp(150px, 35vw, 200px); }
   }
   /* 7-inch tablets (≤600px) */
   @media (min-width: 481px) and (max-width: 600px) {
