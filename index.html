@@ -3239,21 +3239,90 @@ correct service times, address and phone number for local searches.
     pointer-events: none;
   }
 
-  .nx-cross-wrap, .nx-kicker, .nx-title, .nx-lede, .nx-verse,
-  .nx-actions, .nx-services {
+.nx-kicker, .nx-title, .nx-lede, .nx-verse,
+.nx-actions, .nx-services {
     position: relative;
     z-index: 2;
   }
 
-  /* --- Cross --- */
+  /* --- Cross — premium golden image --- */
   .nx-cross-wrap {
+    position: relative;
     margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
   }
-  .nx-cross-wrap svg {
-    width: 80px;
-    height: auto;
+  .nx-cross-image {
     display: block;
-    filter: drop-shadow(0 0 18px rgba(203,182,130,.35));
+    width: clamp(100px, 14vw, 180px);
+    height: auto;
+    pointer-events: none;
+    filter:
+      drop-shadow(0 0 18px rgba(203,182,130,.35))
+      drop-shadow(0 0 40px rgba(203,182,130,.15));
+    animation: nxCrossReveal 2.5s ease-out .8s both;
+  }
+  @keyframes nxCrossReveal {
+    from { opacity: 0; transform: translateY(12px) scale(.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Sacred golden glow — atmospheric radial behind the cross */
+  .nx-cross-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 320%;
+    height: 320%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center,
+      rgba(203,182,130,.14) 0%,
+      rgba(203,182,130,.06) 30%,
+      rgba(203,182,130,.02) 50%,
+      transparent 70%);
+    filter: blur(16px);
+    pointer-events: none;
+    animation: nxGlowPulse 7s ease-in-out 2s infinite;
+  }
+  @keyframes nxGlowPulse {
+    0%, 100% { opacity: .6;  transform: translate(-50%, -50%) scale(1); }
+    50%      { opacity: 1;   transform: translate(-50%, -50%) scale(1.06); }
+  }
+
+  /* Majestic sparkles — golden crystal particles floating around the cross */
+  .nx-sparkle {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    border-radius: 50%;
+  }
+  .nx-sparkle::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      rgba(255,255,245,.95) 0%,
+      rgba(244,228,193,.7) 30%,
+      rgba(203,182,130,.3) 60%,
+      transparent 80%);
+    filter: blur(.4px);
+  }
+  /* sparkle positions — 6 majestic particles */
+  .nx-sparkle.s1 { width: 4px; height: 4px; top: 10%; left: 38%; animation: nxSparkleFloat 7s ease-in-out 1.2s infinite; }
+  .nx-sparkle.s2 { width: 3px; height: 3px; top: 25%; left: 72%; animation: nxSparkleFloat 9s ease-in-out 2.8s infinite; }
+  .nx-sparkle.s3 { width: 5px; height: 5px; top: 45%; left: 12%; animation: nxSparkleFloat 8s ease-in-out 0.5s infinite; }
+  .nx-sparkle.s4 { width: 3px; height: 3px; top: 60%; left: 65%; animation: nxSparkleFloat 10s ease-in-out 3.5s infinite; }
+  .nx-sparkle.s5 { width: 4px; height: 4px; top: 78%; left: 42%; animation: nxSparkleFloat 7.5s ease-in-out 1.8s infinite; }
+  .nx-sparkle.s6 { width: 3px; height: 3px; top: 15%; left: 58%; animation: nxSparkleFloat 8.5s ease-in-out 4.2s infinite; }
+  @keyframes nxSparkleFloat {
+    0%, 100% { opacity: 0;   transform: translateY(0) scale(.5); }
+    12%      { opacity: .8;  transform: translateY(-3px) scale(1); }
+    40%      { opacity: .5;  transform: translateY(-8px) scale(.9); }
+    70%      { opacity: .7;  transform: translateY(-4px) scale(1.05); }
+    90%      { opacity: .3;  transform: translateY(-1px) scale(.8); }
   }
 
   /*
@@ -3269,9 +3338,9 @@ correct service times, address and phone number for local searches.
     z-index: 1;
     /* Positioned to the upper-right of the cross; the dove faces left
        and appears to descend toward the cross */
-    top: 18%;
+    top: 10%;
     left: 50%;
-    width: 200px;
+    width: clamp(100px, 14vw, 210px);
     transform: translate(40px, -10px);
     pointer-events: none;
     opacity: 0;
@@ -3281,23 +3350,25 @@ correct service times, address and phone number for local searches.
     from { opacity: 0; }
     to   { opacity: 1; }
   }
-  .nx-dove {
+  /* Holy Spirit Dove — transparent PNG asset */
+  .holy-spirit-dove {
     position: relative;
     z-index: 2;
     display: block;
     width: 100%;
     height: auto;
+    object-fit: contain;
+    pointer-events: none;
     filter:
-      drop-shadow(0 0 10px rgba(203,182,130,.3))
-      drop-shadow(0 0 22px rgba(203,182,130,.12));
-    /* Subtle float — tiny relative offsets that work at any wrapper position/size */
+      drop-shadow(0 0 12px rgba(203,182,130,.25))
+      drop-shadow(0 0 24px rgba(203,182,130,.10));
     animation: nxDoveFloat 14s ease-in-out 3.2s infinite;
   }
   @keyframes nxDoveFloat {
     0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    25%      { transform: translate(-2px, -3px) rotate(-.3deg); }
-    50%      { transform: translate(0, -5px) rotate(0deg); }
-    75%      { transform: translate(2px, -2px) rotate(.3deg); }
+    25%      { transform: translate(-1px, -2px) rotate(-.2deg); }
+    50%      { transform: translate(0, -3px) rotate(0deg); }
+    75%      { transform: translate(1px, -1px) rotate(.2deg); }
   }
   /* Soft radial glow behind the dove */
   .nx-dove-glow {
@@ -3315,20 +3386,6 @@ correct service times, address and phone number for local searches.
   @keyframes nxDoveGlow {
     0%, 100% { opacity: .65; transform: scale(1); }
     50%      { opacity: 1;   transform: scale(1.06); }
-  }
-  /* Feathered motion trail — thin canvas behind the dove */
-  .nx-dove-trail {
-    position: absolute;
-    right: 70%;
-    top: 30%;
-    width: 120px;
-    height: 20px;
-    pointer-events: none;
-    opacity: .35;
-    filter: blur(4px);
-    transform: translateY(-2px);
-    mask-image: linear-gradient(to left, rgba(0,0,0,.55) 0%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,.55) 0%, transparent 100%);
   }
   /* Atmospheric particles — scattered around the dove */
   .nx-dove-particles {
@@ -3357,34 +3414,20 @@ correct service times, address and phone number for local searches.
     30%      { opacity: .8;  transform: translateY(-3px) scale(1); }
     70%      { opacity: .6;  transform: translateY(-6px) scale(.9); }
   }
-  /* Responsive sizing */
+  /* Responsive sizing — Holy Spirit Dove */
   @media (max-width: 1100px) {
-    .nx-dove-wrap { top: 15%; left: 48%; width: 160px; transform: translate(30px, -8px); }
+    .nx-cross-image { width: clamp(90px, 13vw, 150px); }
+    .nx-dove-wrap { top: 15%; left: 48%; width: clamp(90px, 13vw, 170px); transform: translate(20px, -6px); }
   }
   @media (max-width: 720px) {
-    .nx-dove-wrap { top: 12%; left: 50%; width: 120px; transform: translate(15px, -5px); }
+    .nx-cross-image { width: clamp(75px, 15vw, 120px); }
+    .nx-dove-wrap { top: 12%; left: 50%; width: clamp(80px, 14vw, 130px); transform: translate(10px, -4px); }
   }
   @media (max-width: 480px) {
-    .nx-dove-wrap { top: 10%; left: 52%; width: 90px; transform: translate(10px, -3px); }
+    .nx-cross-image { width: clamp(60px, 17vw, 100px); }
+    .nx-dove-wrap { top: 10%; left: 52%; width: clamp(70px, 16vw, 110px); transform: translate(5px, -2px); }
   }
-  .nx-cross-line {
-    fill: none;
-    stroke: var(--gold-bright);
-    stroke-width: 7;
-    stroke-linecap: round;
-    stroke-dasharray: 300;
-    stroke-dashoffset: 300;
-    animation: nxDraw 2.4s cubic-bezier(.65,0,.25,1) .4s forwards;
-  }
-  @keyframes nxDraw { to { stroke-dashoffset: 0; } }
-  .nx-halo {
-    transform-origin: center;
-    animation: nxBreathe 6s ease-in-out 2.6s infinite;
-  }
-  @keyframes nxBreathe {
-    0%, 100% { opacity: .55; }
-    50%      { opacity: 1; }
-  }
+
 
   /* --- Kicker / headline / copy --- */
   .nx-kicker {
@@ -3488,30 +3531,6 @@ correct service times, address and phone number for local searches.
     color: rgba(247,243,230,.5);
   }
 
-  /* --- Crystal glints twinkling on the cross --- */
-  .nx-sparkle {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    pointer-events: none;
-    background:
-      radial-gradient(circle,
-        #FFFFFF 0%,
-        #F4D894 35%,
-        transparent 70%);
-    clip-path: polygon(50% 0%, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0% 50%, 38% 38%);
-    opacity: 0;
-    transform: scale(.4) rotate(0deg);
-    animation: nxTwinkle 4.2s ease-in-out infinite;
-    filter: drop-shadow(0 0 6px rgba(255,246,222,.8));
-  }
-  .nx-sparkle.s1 { top: 18%; left: 18%; animation-delay: 1s; }
-  .nx-sparkle.s2 { top: 42%; right: 12%; width: 7px; height: 7px; animation-delay: 2.6s; }
-  .nx-sparkle.s3 { bottom: 20%; left: 30%; width: 6px; height: 6px; animation-delay: 3.8s; }
-  @keyframes nxTwinkle {
-    0%, 100% { opacity: 0; transform: scale(.4) rotate(0deg); }
-    50%      { opacity: 1; transform: scale(1) rotate(90deg); }
-  }
 
   /* --- Ornamental filigree divider --- */
   .nx-filigree {
@@ -3534,10 +3553,16 @@ correct service times, address and phone number for local searches.
     filter: drop-shadow(0 0 5px rgba(203,182,130,.55));
     animation: nxBreathe 6s ease-in-out infinite;
   }
+  @keyframes nxBreathe {
+    0%, 100% { opacity: .55; }
+    50%      { opacity: 1; }
+  }
 
   /* --- Actions --- */
   .nx-actions {
     margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
     animation: nxRise 1.2s ease-out 2.25s forwards;
   }
   /* Glossy jeweled buttons — polished gem surface with a moving sheen */
@@ -3664,9 +3689,6 @@ correct service times, address and phone number for local searches.
     .nx-services { flex-direction: column; align-items: center; gap: .45rem; }
     .nx-service .dot { display: none; }
   }
-  @media (max-width: 720px) {
-    .nx-cross-wrap svg { width: 58px; }
-  }
 
   /* --- Nav legibility over the dark hero ---
      While the nav is transparent (top of page, before `.glass` is
@@ -3764,20 +3786,16 @@ correct service times, address and phone number for local searches.
       transform: none !important;
       animation: none !important;
     }
-    .nx-cross-line {
-      stroke-dashoffset: 0 !important;
-      animation: none !important;
-    }
-    .nx-halo { animation: none !important; }
-    .nx-sparkle { animation: none !important; opacity: .9; }
+      .nx-cross-image { animation: none !important; opacity: 1 !important; }
+      .nx-cross-glow { animation: none !important; opacity: .7 !important; }
+      .nx-sparkle { animation: none !important; opacity: .6 !important; }
     .nx-filigree { opacity: 1 !important; animation: none !important; }
     .btn-nx-solid::after,
     .btn-nx-ghost::after { display: none; }
     .nx-title .w { animation: nxRise 1s ease-out var(--d, 0s) forwards !important; }
     .nx-dove-wrap { opacity: .85 !important; animation: none !important; }
-    .nx-dove { animation: none !important; }
+    .holy-spirit-dove { animation: none !important; }
     .nx-dove-glow { animation: none !important; opacity: .7 !important; }
-    .nx-dove-trail { display: none !important; }
     .nx-particle { animation: none !important; opacity: .6 !important; }
   }
 
@@ -3911,157 +3929,13 @@ bottom of the document.
 <header class="hero" id="top">
   <canvas id="heroSky" aria-hidden="true"></canvas>
 
-  <!-- Dove — flies across the cross, frozen in time -->
+  <!-- Holy Spirit Dove — transparent PNG, frozen in time -->
   <div class="nx-dove-wrap" aria-hidden="true">
-    <!-- Soft radial glow behind the dove -->
     <div class="nx-dove-glow"></div>
-    <!-- Feathered motion trail behind the dove -->
-    <canvas class="nx-dove-trail" aria-hidden="true"></canvas>
-    <svg class="nx-dove" viewBox="0 0 240 170" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="doveBody" x1="70" y1="40" x2="180" y2="130" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#F4E4C1"/>
-          <stop offset="45%" stop-color="#E8D4A0"/>
-          <stop offset="80%" stop-color="#CBB682"/>
-          <stop offset="100%" stop-color="#A98F58"/>
-        </linearGradient>
-        <linearGradient id="doveWingL" x1="0" y1="0" x2="120" y2="80" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#F4E4C1"/>
-          <stop offset="50%" stop-color="#E8D4A0"/>
-          <stop offset="100%" stop-color="#CBB682"/>
-        </linearGradient>
-        <linearGradient id="doveWingR" x1="240" y1="0" x2="120" y2="80" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#F4E4C1"/>
-          <stop offset="50%" stop-color="#E8D4A0"/>
-          <stop offset="100%" stop-color="#CBB682"/>
-        </linearGradient>
-      </defs>
-
-      <!-- ============================================ -->
-      <!--  HOLY SPIRIT DOVE — sacred descending pose   -->
-      <!--  All organic path geometry. No circles/ovals. -->
-      <!-- ============================================ -->
-
-      <!-- TAIL FEATHERS — elegant fan, narrow pointed, streaming below -->
-      <path d="M 108 110 C 102 124, 90 138, 78 148 C 92 140, 104 128, 112 116 Z"
-            fill="#CBB682" opacity=".45"/>
-      <path d="M 114 112 C 108 128, 100 144, 92 154 C 106 144, 116 130, 120 118 Z"
-            fill="#BFAE7A" opacity=".38"/>
-      <path d="M 120 112 C 116 130, 114 148, 112 158 C 122 148, 126 132, 128 118 Z"
-            fill="#A98F58" opacity=".30"/>
-      <path d="M 126 112 C 126 128, 132 144, 140 154 C 134 142, 128 128, 130 116 Z"
-            fill="#BFAE7A" opacity=".38"/>
-      <path d="M 132 110 C 136 122, 148 136, 160 144 C 148 136, 138 124, 136 114 Z"
-            fill="#CBB682" opacity=".32"/>
-
-      <!-- BODY — elongated dove shape, fuller chest, tapers to tail, NOT a circle -->
-      <path d="
-        M 106 74
-        C 100 80, 96 90, 98 100
-        C 100 108, 106 114, 114 116
-        C 122 118, 132 116, 138 112
-        C 144 108, 148 100, 148 92
-        C 148 84, 144 76, 138 70
-        C 130 64, 118 64, 106 74
-        Z"
-        fill="url(#doveBody)" opacity=".72"/>
-
-      <!-- HEAD/NECK — smooth continuous path from crown through nape into body, NO separate circle -->
-      <path d="
-        M 100 68
-        C 96 60, 96 50, 102 44
-        C 108 38, 116 38, 120 44
-        C 124 50, 122 58, 118 64
-        C 114 70, 108 74, 104 74
-        C 100 74, 98 72, 100 68
-        Z"
-        fill="url(#doveBody)" opacity=".78"/>
-
-      <!-- BEAK — short, pointed, dove-like, emerging from head -->
-      <path d="M 100 56 C 96 54, 88 52, 82 52 C 86 56, 92 58, 100 60 Z"
-            fill="#CBB682" opacity=".7"/>
-      <!-- Beak tip accent -->
-      <path d="M 82 52 L 78 51 L 81 54 Z"
-            fill="#BFAE7A" opacity=".5"/>
-
-      <!-- EYE — small, subtle -->
-      <circle cx="104" cy="50" r="1.4" fill="#CBB682" opacity=".85"/>
-
-      <!-- ================================================ -->
-      <!--  LEFT WING — sweeping upward-outward with visible primary feather tips  -->
-      <!-- ================================================ -->
-      <path d="
-        M 104 76
-        C 96 68, 82 56, 64 44
-        C 50 34, 34 26, 18 22
-        C 10 20, 4 22, 2 26
-        C 0 30, 4 34, 12 36
-        C 6 34, 2 32, 0 34
-        C -2 36, 0 40, 6 42
-        C 14 46, 28 52, 44 58
-        C 34 54, 22 50, 14 48
-        C 8 48, 4 52, 8 56
-        C 16 62, 34 68, 56 74
-        C 46 70, 32 66, 22 64
-        C 14 64, 10 68, 16 72
-        C 28 78, 50 82, 78 84
-        C 90 84, 100 82, 104 76
-        Z"
-        fill="url(#doveWingL)" opacity=".68"/>
-
-      <!-- ================================================ -->
-      <!--  RIGHT WING — sweeping upward-outward with visible primary feather tips  -->
-      <!-- ================================================ -->
-      <path d="
-        M 132 76
-        C 140 68, 154 56, 172 44
-        C 186 34, 202 26, 218 22
-        C 226 20, 232 22, 234 26
-        C 236 30, 232 34, 224 36
-        C 230 34, 234 32, 236 34
-        C 238 36, 236 40, 230 42
-        C 222 46, 208 52, 192 58
-        C 202 54, 214 50, 222 48
-        C 228 48, 232 52, 228 56
-        C 220 62, 202 68, 180 74
-        C 190 70, 204 66, 214 64
-        C 222 64, 226 68, 220 72
-        C 208 78, 186 82, 158 84
-        C 146 84, 136 82, 132 76
-        Z"
-        fill="url(#doveWingR)" opacity=".68"/>
-
-      <!-- ====================================== -->
-      <!--  FEATHER DETAILS — organic edge definition  -->
-      <!-- ====================================== -->
-
-      <!-- Left wing — primary feather tip lines -->
-      <path d="M 12 34 C 18 38, 26 42, 36 46"
-            stroke="#F4E4C1" stroke-width=".6" opacity=".28" stroke-linecap="round" fill="none"/>
-      <path d="M 8 48 C 18 54, 30 60, 46 66"
-            stroke="#E8D4A0" stroke-width=".5" opacity=".20" stroke-linecap="round" fill="none"/>
-      <path d="M 18 64 C 32 70, 50 76, 72 82"
-            stroke="#CBB682" stroke-width=".4" opacity=".16" stroke-linecap="round" fill="none"/>
-
-      <!-- Right wing — primary feather tip lines -->
-      <path d="M 224 34 C 218 38, 210 42, 200 46"
-            stroke="#F4E4C1" stroke-width=".6" opacity=".28" stroke-linecap="round" fill="none"/>
-      <path d="M 228 48 C 218 54, 206 60, 190 66"
-            stroke="#E8D4A0" stroke-width=".5" opacity=".20" stroke-linecap="round" fill="none"/>
-      <path d="M 218 64 C 204 70, 186 76, 164 82"
-            stroke="#CBB682" stroke-width=".4" opacity=".16" stroke-linecap="round" fill="none"/>
-
-      <!-- Body back sheen -->
-      <path d="M 108 72 C 118 66, 132 66, 140 72"
-            stroke="#F4E4C1" stroke-width=".5" opacity=".18" stroke-linecap="round" fill="none"/>
-
-      <!-- Wing leading edge highlights -->
-      <path d="M 104 74 C 88 60, 62 42, 24 26"
-            stroke="#F4E4C1" stroke-width=".5" opacity=".20" stroke-linecap="round" fill="none"/>
-      <path d="M 132 74 C 148 60, 174 42, 212 26"
-            stroke="#F4E4C1" stroke-width=".5" opacity=".20" stroke-linecap="round" fill="none"/>
-    </svg>
-    <!-- Atmospheric particles — sharp near dove, blurred at distance for depth -->
+    <img src="assets/dove-holy-spirit.png"
+         class="holy-spirit-dove"
+         alt=""
+         aria-hidden="true">
     <div class="nx-dove-particles">
       <span class="nx-particle sharp" style="top:14%;left:32%;width:3px;height:3px;animation-delay:.6s"></span>
       <span class="nx-particle sharp" style="top:26%;left:16%;width:2px;height:2px;animation-delay:2.2s"></span>
@@ -4073,17 +3947,17 @@ bottom of the document.
   </div>
 
   <div class="nx-cross-wrap" aria-hidden="true">
-    <svg viewBox="0 0 60 100">
-      <!-- halo -->
-      <circle class="nx-halo" cx="30" cy="50" r="26" fill="none"
-              stroke="#CBB682" stroke-width="1.4"/>
-      <!-- cross, drawn in by stroke-dashoffset -->
-      <path class="nx-cross-line" d="M30 14 V86 M13 38 H47"/>
-    </svg>
-    <!-- crystal glints -->
+    <div class="nx-cross-glow"></div>
+    <img src="assets/hero-cross-image.png"
+         class="nx-cross-image"
+         alt=""
+         aria-hidden="true">
     <i class="nx-sparkle s1"></i>
     <i class="nx-sparkle s2"></i>
     <i class="nx-sparkle s3"></i>
+    <i class="nx-sparkle s4"></i>
+    <i class="nx-sparkle s5"></i>
+    <i class="nx-sparkle s6"></i>
   </div>
 
   <h1 class="nx-title">
@@ -5269,37 +5143,6 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
     }
   })();
 
-  /*
-  DOVE MOTION TRAIL
-  Paints a faint feathered trail behind the dove on the small canvas
-  element (.nx-dove-trail). Draws once on load — no loop needed since
-  the CSS mask handles the fade and the canvas is static.
-  */
-  (() => {
-    const t = document.querySelector('.nx-dove-trail');
-    if (!t || !t.getContext) return;
-    const ctx = t.getContext('2d');
-    const dpr = devicePixelRatio || 1;
-    const w = t.offsetWidth || 120;
-    const h = t.offsetHeight || 20;
-    t.width = w * dpr;
-    t.height = h * dpr;
-    ctx.scale(dpr, dpr);
-    // Soft champagne trail, widest at right (near dove), fading left
-    const g = ctx.createLinearGradient(w, 0, 0, 0);
-    g.addColorStop(0,   'rgba(203,182,130,.5)');
-    g.addColorStop(0.3, 'rgba(203,182,130,.25)');
-    g.addColorStop(0.7, 'rgba(203,182,130,.08)');
-    g.addColorStop(1,   'rgba(203,182,130,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.moveTo(w, h * 0.3);
-    ctx.bezierCurveTo(w * 0.6, h * 0.1, w * 0.3, h * 0.5, 0, h * 0.45);
-    ctx.lineTo(0, h * 0.55);
-    ctx.bezierCurveTo(w * 0.3, h * 0.5, w * 0.6, h * 0.9, w, h * 0.7);
-    ctx.closePath();
-    ctx.fill();
-  })();
 
 </script>
 
