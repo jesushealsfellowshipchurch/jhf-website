@@ -64,7 +64,7 @@ DOCUMENT HEAD
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Jesus Heals Fellowship Church — I Am the Lord Who Heals You</title>
-<meta name="description" content="Jesus Heals Fellowship Church — a healing ministry Baptist church in Vizianagaram, Andhra Pradesh. 'I am the Lord, who heals you' (Exodus 15:26). Worship Fridays 7:00 PM & Sundays 10:00 AM." />
+<meta name="description" content="Jesus Heals Fellowship Church — a healing ministry fellowship church in Vizianagaram, Andhra Pradesh. 'I am the Lord, who heals you' (Exodus 15:26). Worship Fridays 7:00 PM & Sundays 10:00 AM." />
 
 <!--
 SOCIAL SHARING / SEO
@@ -75,13 +75,13 @@ SOCIAL SHARING / SEO
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23181510'/%3E%3Crect x='29' y='12' width='6' height='40' fill='%23CBB682'/%3E%3Crect x='18' y='22' width='28' height='6' fill='%23CBB682'/%3E%3C/svg%3E" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Jesus Heals Fellowship Church — A Place to Belong" />
-<meta property="og:description" content="A warm Baptist community in Vizianagaram, Andhra Pradesh. Worship with us Fridays 7:00 PM & Sundays 10:00 AM." />
+<meta property="og:description" content="A warm fellowship community in Vizianagaram, Andhra Pradesh. Worship with us Fridays 7:00 PM & Sundays 10:00 AM." />
 <meta property="og:url" content="https://www.google.com/maps?q=Jesus+Heals+Fellowship+Church,+Ambati+Satram+Area,+Vizianagaram" />
 <meta property="og:site_name" content="Jesus Heals Fellowship Church" />
 <meta property="og:locale" content="en_IN" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Jesus Heals Fellowship Church — A Place to Belong" />
-<meta name="twitter:description" content="A warm Baptist community in Vizianagaram, Andhra Pradesh. Worship with us Fridays 7:00 PM & Sundays 10:00 AM." />
+<meta name="twitter:description" content="A warm fellowship community in Vizianagaram, Andhra Pradesh. Worship with us Fridays 7:00 PM & Sundays 10:00 AM." />
 <meta name="theme-color" content="#181510" />
 
 <!--
@@ -94,7 +94,7 @@ correct service times, address and phone number for local searches.
   "@context": "https://schema.org",
   "@type": "Church",
   "name": "Jesus Heals Fellowship Church",
-  "description": "Jesus Heals Fellowship Church — a healing ministry Baptist church in Vizianagaram, Andhra Pradesh. 'I am the Lord, who heals you' (Exodus 15:26).",
+  "description": "Jesus Heals Fellowship Church — a healing ministry fellowship church in Vizianagaram, Andhra Pradesh. 'I am the Lord, who heals you' (Exodus 15:26).",
   "telephone": "+91 94930 34647",
   "address": {
     "@type": "PostalAddress",
@@ -3325,6 +3325,41 @@ correct service times, address and phone number for local searches.
     90%      { opacity: .3;  transform: translateY(-1px) scale(.8); }
   }
 
+  /* Hero family photo — top-right corner, below nav, blended in */
+  .hero-family-photo-wrap {
+    position: absolute;
+    top: calc(var(--nav-h, 64px) + 1.5rem);
+    right: 100rem;
+    z-index: 2;
+    pointer-events: none;
+    animation: nxRise 1.5s ease-out 2s both;
+  }
+  .hero-family-photo {
+    display: block;
+    width: clamp(140px, 16vw, 220px);
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(203,182,130,.18);
+    box-shadow:
+      0 4px 24px rgba(0,0,0,.4),
+      0 0 50px rgba(203,182,130,.06);
+    opacity: .75;
+    filter: saturate(.85);
+    transition: opacity .4s, filter .4s;
+  }
+  .hero-family-photo-wrap:hover .hero-family-photo {
+    opacity: 1;
+    filter: saturate(1);
+  }
+  @media (max-width: 768px) {
+    .hero-family-photo-wrap {
+      top: auto;
+      bottom: 50rem;
+      right: 20rem;
+    }
+    .hero-family-photo { width: clamp(100px, 22vw, 140px); }
+  }
+
   /*
   DOVE — frozen in time
   A subtle dove silhouette flies across the cross, caught mid-flight.
@@ -3929,6 +3964,14 @@ bottom of the document.
 <header class="hero" id="top">
   <canvas id="heroSky" aria-hidden="true"></canvas>
 
+  <!-- Hero family photo — top-right, blended in -->
+  <div class="hero-family-photo-wrap" aria-hidden="true">
+    <img src="assets/hero-family-photo.png"
+         class="hero-family-photo"
+         alt=""
+         loading="eager">
+  </div>
+
   <!-- Holy Spirit Dove — transparent PNG, frozen in time -->
   <div class="nx-dove-wrap" aria-hidden="true">
     <div class="nx-dove-glow"></div>
@@ -4009,12 +4052,12 @@ SECTION DOCUMENTATION: Welcome: church introduction, visitor expectations, conta
     <div class="sec-head reveal">
       <p class="kicker">Welcome Home</p>
       <h2>More than a building — <em>a family</em></h2>
-      <p>Jesus Heals Fellowship Church is a Baptist community in Ambati Satram Area, Vizianagaram. Built on grace, kindness, and hope — where faith feels real and people feel known.</p>
+      <p>Jesus Heals Fellowship Church is a fellowship community in Ambati Satram Area, Vizianagaram. Built on grace, kindness, and hope — where faith feels real and people feel known.</p>
     </div>
     <div class="welcome-grid">
       <div class="welcome-text reveal">
         <h3>You don't have to have it <span>all together.</span></h3>
-        <p>Jesus Heals Fellowship Church is a Baptist community for real people with real questions and real lives. Whether you've been a believer your whole life or you're just curious, you'll find open doors, warm faces, and a message of hope that speaks to where you are today.</p>
+        <p>Jesus Heals Fellowship Church is a fellowship community for real people with real questions and real lives. Whether you've been a believer your whole life or you're just curious, you'll find open doors, warm faces, and a message of hope that speaks to where you are today.</p>
         <p>We gather Fridays at 7:00 PM and Sundays at 10:00 AM to worship, to learn, and to simply be together. No pressure. No pretense. Just grace.</p>
         <blockquote class="verse">
           "Come to me, all who are weary and burdened, and I will give you rest."
