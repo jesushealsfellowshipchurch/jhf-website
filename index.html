@@ -125,6 +125,12 @@ correct service times, address and phone number for local searches.
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://www.youtube.com" />
+<link rel="preconnect" href="https://www.google.com" />
+<link rel="preconnect" href="https://i.ytimg.com" />
+<link rel="preconnect" href="https://googlevideo.com" crossorigin />
+<link rel="dns-prefetch" href="https://www.youtube.com" />
+<link rel="dns-prefetch" href="https://googlevideo.com" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <style>
 
@@ -3896,6 +3902,557 @@ correct service times, address and phone number for local searches.
     .hero-couple { animation: none !important; opacity: 1 !important; }
   }
 
+
+
+  /* ==========================================================================
+     PREMIUM IN-SITE VIDEO EXPERIENCE & MODAL
+     ========================================================================== */
+  
+  body.video-modal-open {
+    overflow: hidden !important;
+    touch-action: none;
+  }
+
+  body.video-modal-open .hero-sky,
+  body.video-modal-open .dove-watermark {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Featured Video Showcase in YouTube Section */
+  .youtube-featured-showcase {
+    margin-bottom: 24px;
+    width: 100%;
+  }
+
+  .featured-video-preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: min(520px, 70vh);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--ink);
+    border: 1px solid rgba(203, 182, 130, 0.35);
+    box-shadow: 0 20px 50px rgba(24, 21, 16, 0.22), 0 0 35px rgba(203, 182, 130, 0.12);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    outline: none;
+    transition: transform var(--duration-base) var(--ease-out),
+                box-shadow var(--duration-base) var(--ease-out),
+                border-color var(--duration-base) var(--ease-out);
+  }
+
+  .featured-video-preview:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold-bright);
+    box-shadow: 0 28px 65px rgba(24, 21, 16, 0.28), 0 0 45px rgba(203, 182, 130, 0.3);
+  }
+
+  .featured-video-preview:focus-visible {
+    outline: 2px solid var(--gold-bright);
+    outline-offset: 3px;
+  }
+
+  .featured-video-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease-out);
+  }
+
+  .featured-video-preview:hover .featured-video-img {
+    transform: scale(1.035);
+  }
+
+  .featured-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(24, 21, 16, 0.2) 0%,
+      rgba(24, 21, 16, 0.35) 45%,
+      rgba(24, 21, 16, 0.92) 100%
+    );
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .featured-video-preview:hover .featured-video-overlay {
+    opacity: 0.92;
+  }
+
+  .featured-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(62px, 9vw, 84px);
+    height: clamp(62px, 9vw, 84px);
+    border-radius: 50%;
+    background: rgba(24, 21, 16, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid var(--gold-bright);
+    color: var(--gold-bright);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 30px rgba(203, 182, 130, 0.35);
+    transition: all 0.3s var(--ease-spring);
+    z-index: 2;
+  }
+
+  .featured-play-btn svg {
+    margin-left: 4px;
+    width: clamp(26px, 4vw, 36px);
+    height: clamp(26px, 4vw, 36px);
+  }
+
+  .featured-video-preview:hover .featured-play-btn {
+    transform: translate(-50%, -50%) scale(1.12);
+    background: var(--gold-bright);
+    color: var(--ink);
+    border-color: #fff;
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.6), 0 0 45px rgba(203, 182, 130, 0.6);
+  }
+
+  .featured-video-badge {
+    position: absolute;
+    top: clamp(14px, 3vw, 24px);
+    left: clamp(14px, 3vw, 24px);
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    background: rgba(24, 21, 16, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(203, 182, 130, 0.3);
+    color: var(--gold-bright);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .featured-video-badge .badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ff3b30;
+    box-shadow: 0 0 8px #ff3b30;
+    animation: livePulse 2s infinite;
+  }
+
+  @keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+  }
+
+  .featured-video-meta {
+    position: relative;
+    z-index: 2;
+    padding: clamp(16px, 3.5vw, 30px);
+    color: var(--cream);
+  }
+
+  .featured-video-title {
+    font-family: var(--serif);
+    font-size: clamp(1.1rem, 2.6vw, 1.95rem);
+    font-weight: 500;
+    line-height: 1.25;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    max-width: 820px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .featured-video-prompt {
+    margin-top: 8px;
+    font-size: clamp(0.82rem, 1.3vw, 0.92rem);
+    color: var(--gold-soft);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  @media (max-width: 640px) {
+    .featured-play-btn {
+      width: 52px;
+      height: 52px;
+    }
+    .featured-play-btn svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 3px;
+    }
+    .featured-video-meta {
+      padding: 12px 14px;
+    }
+    .featured-video-title {
+      font-size: 0.96rem;
+      line-height: 1.2;
+      -webkit-line-clamp: 1;
+    }
+    .featured-video-prompt {
+      font-size: 0.76rem;
+      margin-top: 4px;
+    }
+  }
+
+  /* Native Accessible Video Dialog Modal — High Performance Cinematic Player */
+  dialog.video-modal {
+    padding: 0;
+    margin: auto;
+    border: none;
+    background: transparent;
+    max-width: min(960px, calc(100vw - 28px));
+    width: min(960px, calc(100vw - 28px));
+    overflow: visible;
+    color: var(--cream);
+  }
+
+  /* Solid cinematic scrim: avoids expensive GPU backdrop-filter re-sampling during video decode */
+  dialog.video-modal::backdrop {
+    background: rgba(10, 8, 6, 0.94);
+    animation: modalBackdropFade 0.2s ease-out forwards;
+  }
+
+  @keyframes modalBackdropFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .video-modal-dialog {
+    position: relative;
+    background: var(--ink);
+    border: 1px solid rgba(203, 182, 130, 0.35);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9), 0 0 50px rgba(203, 182, 130, 0.15);
+    overflow: hidden;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    contain: layout style;
+    animation: modalDialogZoom 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes modalDialogZoom {
+    from { opacity: 0; transform: scale(0.97) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .video-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    background: linear-gradient(90deg, #1f1b15 0%, #181510 100%);
+    border-bottom: 1px solid rgba(203, 182, 130, 0.15);
+    gap: 12px;
+  }
+
+  .video-modal-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .video-modal-yt-icon {
+    color: #ff0000;
+    flex-shrink: 0;
+  }
+
+  .video-modal-title {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .video-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .video-modal-yt-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(203, 182, 130, 0.3);
+    color: var(--cream);
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .video-modal-yt-link:hover {
+    background: rgba(203, 182, 130, 0.18);
+    border-color: var(--gold-bright);
+    color: var(--gold-bright);
+  }
+
+  .video-modal-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(203, 182, 130, 0.3);
+    color: var(--cream);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+  }
+
+  .video-modal-close:hover {
+    background: var(--gold-bright);
+    color: var(--ink);
+    border-color: var(--gold-bright);
+    transform: rotate(90deg);
+  }
+
+  .video-modal-close:focus-visible {
+    outline: 2px solid var(--gold-bright);
+    outline-offset: 2px;
+  }
+
+  .video-modal-player-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #0a0806;
+    contain: strict;
+    transform: translateZ(0);
+  }
+
+  .video-modal-player-wrap iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* Elegant Champagne Loading Indicator */
+  .video-modal-loader {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #0e0c09;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.35s ease;
+  }
+
+  .video-modal-loader.hidden {
+    opacity: 0;
+  }
+
+  .video-modal-spinner {
+    width: 38px;
+    height: 38px;
+    border: 3px solid rgba(203, 182, 130, 0.2);
+    border-top-color: var(--gold-bright);
+    border-radius: 50%;
+    animation: spinModal 0.8s linear infinite;
+  }
+
+  @keyframes spinModal {
+    to { transform: rotate(360deg); }
+  }
+
+  .video-modal-loader-text {
+    font-size: 0.8rem;
+    color: var(--gold-soft);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    dialog.video-modal {
+      max-width: calc(100vw - 16px);
+      width: calc(100vw - 16px);
+      margin: auto;
+    }
+    .video-modal-header {
+      padding: 10px 12px;
+    }
+    .video-modal-title {
+      font-size: 0.82rem;
+    }
+    .video-modal-yt-link {
+      display: none;
+    }
+    .video-modal-close {
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
+    }
+  }
+
+  /* ==========================================================================
+     FINAL PLAN YOUR VISIT CTA (Clean & Emotional, No Map)
+     ========================================================================== */
+  .visit-section {
+    background: #181510 !important;
+    color: #fff;
+    padding: clamp(72px, 9vw, 120px) 0 !important;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .visit-section::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(320px, 65vw, 750px);
+    height: clamp(320px, 65vw, 750px);
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(203, 182, 130, 0.12) 0%, rgba(24, 21, 16, 0) 70%);
+    pointer-events: none;
+  }
+
+  .visit-cta-box {
+    position: relative;
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+    padding: clamp(48px, 6vw, 76px) clamp(24px, 5vw, 60px);
+    background: linear-gradient(180deg, rgba(36, 31, 24, 0.8) 0%, rgba(24, 21, 16, 0.98) 100%);
+    border: 1px solid rgba(203, 182, 130, 0.24);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.55), 0 0 45px rgba(203, 182, 130, 0.1);
+  }
+
+  .visit-cta-box .kicker {
+    color: var(--gold-bright);
+    margin-bottom: 14px;
+  }
+
+  .visit-cta-box h2 {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+
+  .visit-cta-box h2 em {
+    color: var(--gold-bright);
+    font-style: italic;
+  }
+
+  .visit-cta-text {
+    max-width: 540px;
+    margin: 22px auto 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: clamp(1rem, 1.8vw, 1.12rem);
+    line-height: 1.7;
+  }
+
+  .visit-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: var(--gold-bright);
+    color: var(--ink);
+    font-weight: 600;
+    padding: 16px 36px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--gold-bright);
+    transition: all var(--duration-fast) var(--ease-out);
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(203, 182, 130, 0.3);
+  }
+
+  .btn-primary-gold:hover {
+    background: #dfcc9a;
+    border-color: #dfcc9a;
+    color: var(--ink);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(203, 182, 130, 0.45);
+  }
+
+  .btn-outline-champagne {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--cream);
+    font-weight: 600;
+    padding: 16px 34px;
+    border-radius: var(--radius-pill);
+    border: 1.5px solid rgba(203, 182, 130, 0.45);
+    transition: all var(--duration-fast) var(--ease-out);
+    text-decoration: none;
+  }
+
+  .btn-outline-champagne:hover {
+    background: rgba(203, 182, 130, 0.12);
+    border-color: var(--gold-bright);
+    color: #fff;
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 560px) {
+    .visit-cta-box {
+      padding: 38px 20px;
+    }
+    .visit-actions {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+    .visit-actions .btn-primary-gold,
+    .visit-actions .btn-outline-champagne {
+      width: 100%;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -3916,8 +4473,9 @@ SECTION DOCUMENTATION: Navigation/header: fixed brand, primary links, CTA, and r
     <a href="#top" class="brand">Jesus <em>Heals</em> Fellowship</a>
     <div class="nav-links" id="navLinks">
       <a href="#welcome">Welcome</a>
-      <a href="#services">Services</a>
-      <a href="#youtube">YouTube</a>
+      <a href="#youtube">Watch</a>
+      <a href="#services">Gather</a>
+      <a href="#location">Find Us</a>
       <a href="#visit" class="nav-cta">
         <span class="cta-dot" aria-hidden="true"></span>
         <span class="cta-label">Join Us Sunday</span>
@@ -4157,10 +4715,121 @@ SECTION DOCUMENTATION: Welcome: church introduction, visitor expectations, conta
   </div>
 </section>
 
-<!--
-SECTION DOCUMENTATION: Services: recurring Friday and Sunday gathering times.
--->
-<!-- ============ SERVICES ============ -->
+<!-- ============ YOUTUBE / WATCH WITH US ============ -->
+<section id="youtube" class="youtube-section">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="kicker">Watch With Us</p>
+      <h2>Moments of faith, worship &amp; inspiration.</h2>
+      <p>Here is what our fellowship looks and feels like.</p>
+    </div>
+
+    <!-- Featured In-Site Video Showcase -->
+    <div class="youtube-featured-showcase reveal">
+      <div
+        class="featured-video-preview"
+        id="featuredVideoPreview"
+        role="button"
+        tabindex="0"
+        aria-label="Play featured video: నా ప్రతి ఓటమిలో ధైర్యం నీవే"
+      >
+        <img
+          id="featuredVideoThumb"
+          src="https://i.ytimg.com/vi/G_WB8T4lD4c/hqdefault.jpg"
+          alt="Featured worship video"
+          class="featured-video-img"
+          loading="lazy"
+        />
+        <div class="featured-video-overlay" aria-hidden="true"></div>
+        <div class="featured-play-btn" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11.44-6.86a1 1 0 0 0 0-1.72L9.5 4.28a1 1 0 0 0-1.5.86Z"/>
+          </svg>
+        </div>
+        <div class="featured-video-badge">
+          <span class="badge-dot" aria-hidden="true"></span>
+          <span>Featured Video</span>
+        </div>
+        <div class="featured-video-meta">
+          <h3 id="featuredVideoTitle" class="featured-video-title">నా ప్రతి ఓటమిలో ధైర్యం నీవే — New Telugu Christian Song</h3>
+          <p class="featured-video-prompt">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align: -2px; margin-right: 4px;">
+              <path d="M23.5 6.2a3.01 3.01 0 0 0-2.12-2.13C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.57A3.01 3.01 0 0 0 .5 6.2 31.14 31.14 0 0 0 0 12a31.14 31.14 0 0 0 .5 5.8 3.01 3.01 0 0 0 2.12 2.13C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.57a3.01 3.01 0 0 0 2.12-2.13A31.14 31.14 0 0 0 24 12a31.14 31.14 0 0 0-.5-5.8ZM9.6 15.75V8.25L16.1 12l-6.5 3.75Z"/>
+            </svg>
+            Click to watch inside website &bull; Hepsi Sherwin CK
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- YouTube Channel Feature Card -->
+    <div class="youtube-feature reveal">
+      <div class="youtube-copy">
+        <div class="youtube-brand" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.5 6.2a3.01 3.01 0 0 0-2.12-2.13C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.57A3.01 3.01 0 0 0 .5 6.2 31.14 31.14 0 0 0 0 12a31.14 31.14 0 0 0 .5 5.8 3.01 3.01 0 0 0 2.12 2.13C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.57a3.01 3.01 0 0 0 2.12-2.13A31.14 31.14 0 0 0 24 12a31.14 31.14 0 0 0-.5-5.8ZM9.6 15.75V8.25L16.1 12l-6.5 3.75Z"/>
+          </svg>
+        </div>
+
+        <div>
+          <p class="youtube-eyebrow">YouTube Channel</p>
+          <h3>Hepsi Sherwin CK</h3>
+          <p class="youtube-text">
+            Watch songs, worship moments, messages and other videos directly from the channel.
+          </p>
+        </div>
+      </div>
+
+      <div class="youtube-actions">
+        <a
+          href="https://www.youtube.com/@HepsiSherwin_CK"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-light youtube-channel-btn"
+          aria-label="Open Hepsi Sherwin CK YouTube channel"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M23.5 6.2a3.01 3.01 0 0 0-2.12-2.13C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.57A3.01 3.01 0 0 0 .5 6.2 31.14 31.14 0 0 0 0 12a31.14 31.14 0 0 0 .5 5.8 3.01 3.01 0 0 0 2.12 2.13C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.57a3.01 3.01 0 0 0 2.12-2.13A31.14 31.14 0 0 0 24 12a31.14 31.14 0 0 0-.5-5.8ZM9.6 15.75V8.25L16.1 12l-6.5 3.75Z"/>
+          </svg>
+          Visit YouTube Channel
+        </a>
+      </div>
+    </div>
+
+    <!-- Video Grid (Latest Videos & Shorts) -->
+    <div class="youtube-embed reveal">
+      <div class="youtube-embed-head">
+        <div>
+          <p class="location-label">More From Channel</p>
+          <h3>Latest Uploads</h3>
+        </div>
+        <a
+          href="https://www.youtube.com/@HepsiSherwin_CK"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="maps-open"
+        >
+          Open Channel →
+        </a>
+      </div>
+
+      <div class="yt-row-label" id="videosRowLabel">Latest Videos</div>
+      <div class="youtube-video-grid" id="videoGrid"></div>
+
+      <div class="yt-row-label" id="shortsRowLabel">Latest Shorts</div>
+      <div class="youtube-video-grid shorts-grid" id="shortsGrid"></div>
+
+      <div class="youtube-note">
+        <span>More videos are available on the channel.</span>
+        <a href="https://www.youtube.com/@HepsiSherwin_CK"
+           target="_blank"
+           rel="noopener noreferrer">See all videos on YouTube →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GATHER WITH US ============ -->
 <section id="services">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -4195,10 +4864,6 @@ SECTION DOCUMENTATION: Services: recurring Friday and Sunday gathering times.
   </div>
 </section>
 
-
-<!--
-SECTION DOCUMENTATION: Find Us: church address, map preview, directions and phone contact.
--->
 <!-- ============ FIND US ============ -->
 <section id="location" class="location-section">
   <div class="wrap">
@@ -4298,159 +4963,73 @@ SECTION DOCUMENTATION: Find Us: church address, map preview, directions and phon
   </div>
 </section>
 
-<!--
-SECTION DOCUMENTATION: YouTube: channel presentation and links to the supplied YouTube channel.
--->
-<!-- ============ YOUTUBE ============ -->
-<section id="youtube" class="youtube-section">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="kicker">Watch With Us</p>
-      <h2>Moments of faith, worship &amp; inspiration.</h2>
-      <p>Explore the latest videos from the channel and watch more on YouTube.</p>
-    </div>
-
-    <div class="youtube-feature reveal">
-      <div class="youtube-copy">
-        <div class="youtube-brand" aria-hidden="true">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M23.5 6.2a3.01 3.01 0 0 0-2.12-2.13C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.57A3.01 3.01 0 0 0 .5 6.2 31.14 31.14 0 0 0 0 12a31.14 31.14 0 0 0 .5 5.8 3.01 3.01 0 0 0 2.12 2.13C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.57a3.01 3.01 0 0 0 2.12-2.13A31.14 31.14 0 0 0 24 12a31.14 31.14 0 0 0-.5-5.8ZM9.6 15.75V8.25L16.1 12l-6.5 3.75Z"/>
-          </svg>
-        </div>
-
-        <div>
-          <p class="youtube-eyebrow">YouTube Channel</p>
-          <h3>Hepsi Sherwin CK</h3>
-          <p class="youtube-text">
-            Watch songs, worship moments, messages and other videos directly from the channel.
-          </p>
-        </div>
-      </div>
-
-      <div class="youtube-actions">
-        <a
-          href="https://www.youtube.com/@HepsiSherwin_CK"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn btn-light youtube-channel-btn"
-          aria-label="Open Hepsi Sherwin CK YouTube channel"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M23.5 6.2a3.01 3.01 0 0 0-2.12-2.13C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.57A3.01 3.01 0 0 0 .5 6.2 31.14 31.14 0 0 0 0 12a31.14 31.14 0 0 0 .5 5.8 3.01 3.01 0 0 0 2.12 2.13C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.57a3.01 3.01 0 0 0 2.12-2.13A31.14 31.14 0 0 0 24 12a31.14 31.14 0 0 0-.5-5.8ZM9.6 15.75V8.25L16.1 12l-6.5 3.75Z"/>
-          </svg>
-          Visit YouTube Channel
-        </a>
-      </div>
-    </div>
-
-    <div class="youtube-embed reveal">
-      <div class="youtube-embed-head">
-        <div>
-          <p class="location-label">Featured Channel</p>
-          <h3>Hepsi Sherwin CK on YouTube</h3>
-        </div>
-        <a
-          href="https://www.youtube.com/@HepsiSherwin_CK"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="maps-open"
-        >
-          Open Channel →
-        </a>
-      </div>
-
-      <!--
-      Two rows rendered by JavaScript from the live channel feed:
-        1. Latest Videos   (regular uploads)
-        2. Latest Shorts   (vertical shorts)
-      Each row shows up to 3 items and updates automatically.
-      -->
-      <div class="yt-row-label" id="videosRowLabel">Latest Videos</div>
-      <div class="youtube-video-grid" id="videoGrid"></div>
-
-      <div class="yt-row-label" id="shortsRowLabel">Latest Shorts</div>
-      <div class="youtube-video-grid shorts-grid" id="shortsGrid"></div>
-
-      <div class="youtube-note">
-        <span>More videos are available on the channel.</span>
-        <a href="https://www.youtube.com/@HepsiSherwin_CK"
-           target="_blank"
-           rel="noopener noreferrer">See all videos →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!--
-SECTION DOCUMENTATION: Verse Band: decorative scripture break between major content sections.
--->
-<!-- ============ VERSE BAND ============ -->
-<div class="verse-band">
-  <div class="wrap reveal">
-    <p class="verse-kicker">Jehovah Rapha &mdash; The Lord Who Heals</p>
-    <blockquote>&ldquo;I will not bring on you any of these diseases, for <span>I am the Lord, who heals you.</span>&rdquo;</blockquote>
-    <cite>&mdash; Exodus 15:26</cite>
-  </div>
-</div>
-
-<!--
-SECTION DOCUMENTATION: Visit: premium invitation panel, Google Maps preview, directions and phone number.
--->
-<!-- ============ VISIT ============ -->
+<!-- ============ FINAL PLAN YOUR VISIT CTA ============ -->
 <section id="visit" class="visit-section">
   <div class="wrap">
-    <div class="visit-layout reveal">
-      <div class="visit-message">
-        <p class="kicker">Plan Your Visit</p>
-        <h2>Your seat is <em>waiting.</em></h2>
-        <p>Join us for worship and fellowship. If you're visiting for the first time, we'd be glad to welcome you.</p>
-        <div class="visit-actions">
-          <a class="btn btn-light" href="https://www.google.com/maps/dir/?api=1&destination=18.1150546,83.4153148&travelmode=driving" target="_blank" rel="noopener noreferrer">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-            Get Directions
-          </a>
-          <a class="visit-secondary" href="#location">Find Us ↓</a>
-        </div>
-      </div>
-      <div class="visit-location">
-        <p class="kicker">Find Us</p>
-        <h3>Jesus Heals Fellowship</h3>
-        <p class="visit-address">Ambati Satram Area, Vizianagaram, Andhra Pradesh, India</p>
-        <div class="visit-map-preview">
-
-          <div class="map-church-label" aria-label="Jesus Heals Fellowship">
-            <span class="map-church-label-icon" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="2">
-                <path d="M12 3v18M4 9h16"/>
-              </svg>
-            </span>
-            <span>Jesus Heals Fellowship</span>
-          </div>
-
-          <iframe
-            title="Google Maps preview of Jesus Heals Fellowship"
-            src="https://www.google.com/maps?q=Jesus+Heals+Fellowship+Church,+Ambati+Satram+Area,+Vizianagaram,+Andhra+Pradesh+18.1150546,83.4153148&z=17&output=embed"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            allowfullscreen>
-          </iframe>
-          <a class="map-overlay-link" href="https://www.google.com/maps/dir/?api=1&destination=18.1150546,83.4153148&travelmode=driving" target="_blank" rel="noopener noreferrer">
-            Open in Google Maps →
-          </a>
-        </div>
-        <div class="visit-location-bottom">
-          <a class="phone-link" href="tel:+919493034647">+91 94930 34647</a>
-          <a class="maps-link" href="https://www.google.com/maps/dir/?api=1&destination=18.1150546,83.4153148&travelmode=driving" target="_blank" rel="noopener noreferrer">Get Directions →</a>
-        </div>
+    <div class="visit-cta-box reveal">
+      <p class="kicker">Plan Your Visit</p>
+      <h2>Your seat is <em>waiting.</em></h2>
+      <p class="visit-cta-text">Join us for worship and fellowship. If you're visiting for the first time, we'd be glad to welcome you into our family.</p>
+      <div class="visit-actions">
+        <a href="#services" class="btn btn-primary-gold">
+          Plan Your Visit
+        </a>
+        <a
+          href="https://www.google.com/maps/dir/?api=1&destination=18.1150546,83.4153148&travelmode=driving"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-outline-champagne"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0Z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          Get Directions
+        </a>
       </div>
     </div>
   </div>
 </section>
 
-<!--
-SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section navigation links.
--->
+<!-- ============ ACCESSIBLE IN-SITE VIDEO MODAL ============ -->
+<dialog id="videoModal" class="video-modal" aria-labelledby="videoModalTitle" aria-modal="true">
+  <div class="video-modal-dialog">
+    <div class="video-modal-header">
+      <div class="video-modal-brand">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="video-modal-yt-icon" aria-hidden="true">
+          <path d="M23.5 6.2a3.01 3.01 0 0 0-2.12-2.13C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.38.57A3.01 3.01 0 0 0 .5 6.2 31.14 31.14 0 0 0 0 12a31.14 31.14 0 0 0 .5 5.8 3.01 3.01 0 0 0 2.12 2.13C4.5 20.5 12 20.5 12 20.5s7.5 0 9.38-.57a3.01 3.01 0 0 0 2.12-2.13A31.14 31.14 0 0 0 24 12a31.14 31.14 0 0 0-.5-5.8ZM9.6 15.75V8.25L16.1 12l-6.5 3.75Z"/>
+        </svg>
+        <span id="videoModalTitle" class="video-modal-title">Watch Worship</span>
+      </div>
+      <div class="video-modal-actions">
+        <a id="videoModalExternalLink" href="https://www.youtube.com/@HepsiSherwin_CK" target="_blank" rel="noopener noreferrer" class="video-modal-yt-link" title="Open directly in YouTube">
+          <span>YouTube ↗</span>
+        </a>
+        <button type="button" class="video-modal-close" id="videoModalClose" aria-label="Close video player">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="video-modal-player-wrap">
+      <div class="video-modal-loader" id="videoModalLoader" aria-hidden="true">
+        <div class="video-modal-spinner"></div>
+        <span class="video-modal-loader-text">Loading worship video...</span>
+      </div>
+      <iframe
+        id="videoModalIframe"
+        src=""
+        title="Jesus Heals Fellowship Video Player"
+        loading="eager"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</dialog>
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap foot-inner">
@@ -4458,10 +5037,10 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
     <p>Friday 7:00 PM – 8:00 PM · Sunday 10:00 AM – 12:00 PM</p>
     <div class="foot-links">
       <a href="#welcome">Welcome</a>
-      <a href="#youtube">YouTube</a>
-      <a href="#services">Services</a>
-      
-      <a href="#visit">Visit Us</a>
+      <a href="#youtube">Watch</a>
+      <a href="#services">Gather</a>
+      <a href="#location">Find Us</a>
+      <a href="#visit">Plan Your Visit</a>
     </div>
   </div>
 </footer>
@@ -4674,24 +5253,17 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
   })();
 
   /*
-  BEHAVIOR: YOUTUBE VIDEO GRID — LIVE FEED
-  Videos load live from the channel's public RSS feed, so new uploads appear
-  automatically without editing this file. The feed URL is free, key-less and
-  published by YouTube for every channel:
-    https://www.youtube.com/feeds/videos.xml?channel_id=UC...
-  Browsers block reading it directly (CORS), so the request is routed through
-  public CORS relays; if all of them fail (offline, relay down), the static
-  FALLBACK_VIDEOS list below is shown instead, so the section is never empty.
-
-  Rendering is click-to-play: only a lightweight thumbnail loads initially;
-  the YouTube iframe is injected when the visitor clicks, keeping the page fast.
+  BEHAVIOR: YOUTUBE IN-SITE VIDEO MODAL & LIVE FEED
+  Provides a premium in-site modal video player for the featured video
+  and channel uploads. Clicking any video plays it smoothly inside an
+  accessible dialog modal with native Picture-in-Picture support,
+  focus management, Escape key closing, and instant audio termination
+  when closed.
   */
   (() => {
     const CHANNEL_ID = 'UCXHiWtcWRSCxqj9tw1JBrmg';
     const MAX_PER_ROW = 3;
 
-    // Shown only if every live-feed attempt fails (3 videos + 3 shorts).
-    // Long-form uploads only — Shorts never appear in the Videos row.
     const FALLBACK_VIDEOS = [
       { id: 'G_WB8T4lD4c', title: 'నా ప్రతి ఓటమిలో ధైర్యం నీవే — New Telugu Christian Song' },
       { id: 'jxJYNomKYLY', title: 'Aathma Deepama — Rev Dr R Sukumar Patnaik' },
@@ -4703,20 +5275,185 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
       { id: 'YUcQoT-53ss', title: 'దేవునియందు నిరీక్షణ ఎన్నటికీ వృధా కాదు' }
     ];
 
-    // Known older long-form uploads used to backfill the Videos row when the
-    // recent feed contains fewer than 3 non-short items (the channel currently
-    // posts mostly Shorts). Newest first.
     const OLDER_VIDEO_IDS = [
       { id: 'G_WB8T4lD4c', title: 'నా ప్రతి ఓటమిలో ధైర్యం నీవే — New Telugu Christian Song' },
       { id: 'jxJYNomKYLY', title: 'Aathma Deepama — Rev Dr R Sukumar Patnaik' },
       { id: '40ahsHVl-Zo', title: 'Bible Golden Words — Stacy Stany Christy' }
     ];
 
-    // Free, key-less feed relays, tried in order.
-    // 1. rss2json — converts the RSS to JSON directly (primary).
-    // 2. AllOrigins — raw CORS proxy, parsed as XML (backup).
-    // 3. AllOrigins /get — JSON-wrapped variant of the same proxy, used when
-    //    the raw endpoint is down (it is rate-limited independently).
+    let featuredVideo = FALLBACK_VIDEOS[0];
+    let lastFocusedElement = null;
+
+    const videoModal = document.getElementById('videoModal');
+    const videoModalIframe = document.getElementById('videoModalIframe');
+    const videoModalClose = document.getElementById('videoModalClose');
+    const videoModalTitle = document.getElementById('videoModalTitle');
+    const videoModalExternalLink = document.getElementById('videoModalExternalLink');
+    const videoModalLoader = document.getElementById('videoModalLoader');
+
+    const featuredVideoPreview = document.getElementById('featuredVideoPreview');
+    const featuredVideoThumb = document.getElementById('featuredVideoThumb');
+    const featuredVideoTitle = document.getElementById('featuredVideoTitle');
+
+    // Hide loader once the iframe finishes loading
+    if (videoModalIframe && videoModalLoader) {
+      videoModalIframe.addEventListener('load', () => {
+        if (videoModalLoader._timeout) clearTimeout(videoModalLoader._timeout);
+        videoModalLoader.classList.add('hidden');
+      });
+    }
+
+    // Accessible Video Modal controls
+    function openVideoModal(videoId, title) {
+      if (!videoModal || !videoModalIframe) return;
+      lastFocusedElement = document.activeElement;
+
+      // Immediately pause background canvas animations (hero god-rays & motes)
+      // to free CPU/GPU decoders for 100% smooth video playback
+      if (typeof window.pauseHeroSky === 'function') {
+        window.pauseHeroSky();
+      }
+
+      if (videoModalTitle) {
+        videoModalTitle.textContent = title || 'Watch Video';
+      }
+
+      if (videoModalExternalLink) {
+        videoModalExternalLink.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(videoId);
+      }
+
+      if (videoModalLoader) {
+        videoModalLoader.classList.remove('hidden');
+        if (videoModalLoader._timeout) clearTimeout(videoModalLoader._timeout);
+        videoModalLoader._timeout = setTimeout(() => {
+          videoModalLoader.classList.add('hidden');
+        }, 3000);
+      }
+
+      // Construct high-performance YouTube embed parameters
+      // Standard youtube.com domain connects to low-latency edge CDN with fast adaptive chunk streaming
+      const origin = window.location.origin && window.location.origin !== 'null' ? window.location.origin : '';
+      const params = new URLSearchParams({
+        autoplay: '1',
+        playsinline: '1',
+        rel: '0',
+        modestbranding: '1',
+        enablejsapi: '1'
+      });
+      if (origin) {
+        params.set('origin', origin);
+        params.set('widget_referrer', window.location.href);
+      }
+
+      videoModalIframe.title = title || 'Jesus Heals Fellowship Video Player';
+      videoModalIframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) + '?' + params.toString();
+
+      if (typeof videoModal.showModal === 'function') {
+        videoModal.showModal();
+      } else {
+        videoModal.setAttribute('open', '');
+      }
+
+      document.body.classList.add('video-modal-open');
+      if (videoModalClose) {
+        videoModalClose.focus();
+      }
+    }
+
+    function closeVideoModal() {
+      if (!videoModal) return;
+
+      // Stop and release iframe immediately so no audio continues playing
+      if (videoModalIframe) {
+        videoModalIframe.src = '';
+      }
+
+      if (videoModalLoader) {
+        if (videoModalLoader._timeout) clearTimeout(videoModalLoader._timeout);
+        videoModalLoader.classList.remove('hidden');
+      }
+
+      if (typeof videoModal.close === 'function') {
+        videoModal.close();
+      } else {
+        videoModal.removeAttribute('open');
+      }
+
+      document.body.classList.remove('video-modal-open');
+
+      // Safely resume background canvas when video is closed
+      if (typeof window.resumeHeroSky === 'function') {
+        window.resumeHeroSky();
+      }
+
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+      }
+    }
+
+    if (videoModalClose) {
+      videoModalClose.addEventListener('click', closeVideoModal);
+    }
+
+    if (videoModal) {
+      // Backdrop click (light dismiss)
+      videoModal.addEventListener('click', (event) => {
+        if (event.target === videoModal) {
+          closeVideoModal();
+        }
+      });
+
+      // Dialog native cancel event (Esc key)
+      videoModal.addEventListener('cancel', (event) => {
+        event.preventDefault();
+        closeVideoModal();
+      });
+    }
+
+    // Global Esc key safety fallback
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && videoModal && videoModal.open) {
+        closeVideoModal();
+      }
+    });
+
+    // Update the Featured Video card with dynamic video metadata
+    function setFeaturedVideo(video) {
+      if (!video || !video.id) return;
+      featuredVideo = video;
+
+      if (featuredVideoTitle) {
+        featuredVideoTitle.textContent = video.title;
+      }
+      if (featuredVideoPreview) {
+        featuredVideoPreview.setAttribute('aria-label', 'Play featured video: ' + video.title);
+      }
+      if (featuredVideoThumb) {
+        featuredVideoThumb.src = 'https://i.ytimg.com/vi/' + video.id + '/hqdefault.jpg';
+        const maxImg = new Image();
+        maxImg.onload = () => {
+          if (maxImg.naturalWidth > 120) {
+            featuredVideoThumb.src = 'https://i.ytimg.com/vi/' + video.id + '/maxresdefault.jpg';
+          }
+        };
+        maxImg.src = 'https://i.ytimg.com/vi/' + video.id + '/maxresdefault.jpg';
+      }
+    }
+
+    // Featured video preview click & keyboard listeners
+    if (featuredVideoPreview) {
+      featuredVideoPreview.addEventListener('click', () => {
+        openVideoModal(featuredVideo.id, featuredVideo.title);
+      });
+      featuredVideoPreview.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openVideoModal(featuredVideo.id, featuredVideo.title);
+        }
+      });
+    }
+
+    // Feed sources
     const FEED_URL = 'https://www.youtube.com/feeds/videos.xml?channel_id=' + CHANNEL_ID;
     const SOURCES = [
       {
@@ -4760,10 +5497,6 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
       return div.innerHTML;
     }
 
-    // Cards link straight to the video on YouTube. Embedded playback is
-    // unreliable here (YouTube error 153 blocks embeds from unregistered
-    // origins), so clicking opens youtube.com in a new tab — it always works
-    // and counts as a view for the channel.
     function makeSkeletons(count) {
       const cards = [];
       for (let i = 0; i < count; i++) {
@@ -4786,10 +5519,6 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
       items.forEach(video => targetGrid.appendChild(renderCard(video)));
     }
 
-    // Cards link straight to the video on YouTube. Embedded playback is
-    // unreliable here (YouTube error 153 blocks embeds from unregistered
-    // origins), so clicking opens youtube.com in a new tab — it always works
-    // and counts as a view for the channel.
     function renderCard(video) {
       const isShort = video.short === true;
       const title = video.title || 'Watch on YouTube';
@@ -4800,9 +5529,7 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
       const card = document.createElement('a');
       card.className = 'video-card';
       card.href = watchUrl;
-      card.target = '_blank';
-      card.rel = 'noopener noreferrer';
-      card.setAttribute('aria-label', (isShort ? 'Watch short on YouTube: ' : 'Watch video on YouTube: ') + escapeHtml(title));
+      card.setAttribute('aria-label', (isShort ? 'Watch short: ' : 'Watch video: ') + escapeHtml(title));
       card.innerHTML =
         '<span class="video-thumb" aria-hidden="true">' +
           '<img loading="lazy" alt="" ' +
@@ -4818,11 +5545,17 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
           '<span class="video-title">' + escapeHtml(title) + '</span>' +
           '<span class="video-meta-row">' +
             (video.date ? '<span class="video-date">' + timeAgo(video.date) + '</span>' : '') +
-            '<span class="watch-on-yt">Watch on YouTube ↗</span>' +
+            '<span class="watch-on-yt">Watch in-site ↗</span>' +
           '</span>' +
         '</span>';
 
-      // Subtle 3D tilt that follows the pointer (desktop, fine pointer only).
+      // Clicking card opens the premium in-site video modal!
+      card.addEventListener('click', (event) => {
+        if (event.ctrlKey || event.metaKey || event.shiftKey) return;
+        event.preventDefault();
+        openVideoModal(video.id, video.title);
+      });
+
       if (canTilt) {
         card.addEventListener('pointermove', event => {
           const rect = card.getBoundingClientRect();
@@ -4840,8 +5573,6 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
       return card;
     }
 
-    // rss2json returns { status:'ok', items:[{title, link, guid:'yt:video:ID', pubDate}] }
-    // Shorts are detected from their /shorts/ URL shape.
     function parseJsonFeed(jsonText) {
       const data = JSON.parse(jsonText);
       if (data.status !== 'ok' || !Array.isArray(data.items)) throw new Error('bad json');
@@ -4884,7 +5615,6 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
     }
 
     async function loadLive() {
-      // Skeleton placeholders in both rows while fetching.
       grid.innerHTML = '';
       grid.appendChild(...makeSkeletons(MAX_PER_ROW));
       if (shortsGrid) shortsGrid.appendChild(...makeSkeletons(MAX_PER_ROW));
@@ -4894,9 +5624,14 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
           const videos = await source.parse(await fetchWithTimeout(source.url, 8000));
           if (!videos.length) continue;
           const regular = videos.filter(v => !v.short).slice(0, MAX_PER_ROW);
-          // Backfill the Videos row with known older long-form uploads so it
-          // always shows 3 tiles even when recent uploads are mostly Shorts.
-          // Never backfills an item the feed itself marked as a Short.
+
+          // Update Featured Video dynamically from the latest long-form video in feed!
+          if (regular[0]) {
+            setFeaturedVideo(regular[0]);
+          } else if (videos[0]) {
+            setFeaturedVideo(videos[0]);
+          }
+
           for (const older of OLDER_VIDEO_IDS) {
             if (regular.length >= MAX_PER_ROW) break;
             if (!regular.some(v => v.id === older.id) &&
@@ -4912,7 +5647,6 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
               shortsGrid.classList.add('shown');
               shortsLabel.classList.add('shown');
             } else {
-              // No shorts in the current feed — keep the row hidden.
               shortsGrid.innerHTML = '';
               shortsLabel.style.display = 'none';
             }
@@ -4921,7 +5655,8 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
         } catch (_) { /* try the next relay */ }
       }
 
-      // Every relay failed — show the known-good static lists.
+      // Fallback
+      setFeaturedVideo(FALLBACK_VIDEOS[0]);
       renderRow(grid, FALLBACK_VIDEOS);
       if (shortsGrid && shortsLabel) {
         renderRow(shortsGrid, FALLBACK_SHORTS);
@@ -4930,6 +5665,8 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
       }
     }
 
+    // Initialize with fallback featured video immediately
+    setFeaturedVideo(FALLBACK_VIDEOS[0]);
     loadLive();
   })();
 
@@ -5234,7 +5971,31 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
     };
 
     let lastFrame = 0;
+    let rafId = 0;
+    let isSkyPaused = false;
+    let isHeroIntersecting = true;
+
+    window.pauseHeroSky = function() {
+      isSkyPaused = true;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    window.resumeHeroSky = function() {
+      isSkyPaused = false;
+      if (!reduced && isHeroIntersecting && !rafId) {
+        lastFrame = performance.now();
+        rafId = requestAnimationFrame(frame);
+      }
+    };
+
     const frame = (t) => {
+      if (isSkyPaused) {
+        rafId = 0;
+        return;
+      }
       // dt in ~60fps-frame units, clamped so tab-switches don't explode it
       const dt = Math.min((t - lastFrame) / 16.7, 3) || 1;
       lastFrame = t;
@@ -5247,22 +6008,20 @@ SECTION DOCUMENTATION: Footer: final brand, service-time reminder and section na
 
     // Pause the loop while the hero is scrolled out of view so rays/motes
     // don't burn CPU/GPU in the background; resume on return.
-    let rafId = 0;
     if ('IntersectionObserver' in window && !reduced) {
-      let running = false;
       const visibility = new IntersectionObserver((entries) => {
-        const visible = entries[0].isIntersecting;
-        if (visible && !running) {
-          running = true;
+        isHeroIntersecting = entries[0].isIntersecting;
+        if (isHeroIntersecting && !isSkyPaused && !rafId) {
+          lastFrame = performance.now();
           rafId = requestAnimationFrame(frame);
-        } else if (!visible && running) {
-          running = false;
+        } else if (!isHeroIntersecting && rafId) {
           cancelAnimationFrame(rafId);
+          rafId = 0;
         }
       }, { threshold: 0 });
       visibility.observe(canvas.closest('.hero') || canvas);
     } else if (!reduced) {
-      requestAnimationFrame(frame);
+      rafId = requestAnimationFrame(frame);
     } else {
       drawRays(1200); drawMotes(1200);
     }
